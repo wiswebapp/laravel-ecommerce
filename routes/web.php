@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Permission;
 
 defined('ADMIN_PATH') or define('ADMIN_PATH', 'webadmin');
 /*
@@ -18,7 +18,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 /* for pages */
 Route::get('/{page}', 'PageController')->name('page')->where('page', 'about|privacy|terms');
-Route::get('/{slug}', 'ItemController@viewItem');
+// Route::get('/{slug}', 'ItemController@viewItem');
 
 require('permission_route.php');
 require('admin_routes.php');

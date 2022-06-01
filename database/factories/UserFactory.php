@@ -27,13 +27,13 @@ $factory->define(User::class, function (Faker $faker) {
         'phonecode' => now(),
         'phone' => $faker->PhoneNumber,
         'phone_verified_at' => now(),
-        'password' => '$2y$10$cwJE.SURWdZ0YFAiuUB5Ne.Ei9X0VGwMtWfzuaMxfRZgOIx4J/kbG', // 123456
+        'password' => '$2y$10$xSugoyKv765TY8DsERJ2/.mPIOwLNdM5Iw1n3x1XNVymBlHNG4cX6', // 123456
     ];
 });
 $factory->define(Admin::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => 'admin@example.com',
-        'password' => '$2y$10$cwJE.SURWdZ0YFAiuUB5Ne.Ei9X0VGwMtWfzuaMxfRZgOIx4J/kbG', // 123456
+        'password' => '$2y$10$xSugoyKv765TY8DsERJ2/.mPIOwLNdM5Iw1n3x1XNVymBlHNG4cX6', // 123456
     ];
 });

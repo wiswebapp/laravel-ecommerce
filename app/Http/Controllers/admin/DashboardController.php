@@ -6,9 +6,27 @@ use App\User;
 use App\Product;
 use App\Category;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class DashboardController extends Controller
 {
+    public function initializeApp()
+    {
+        $user = Auth::user();
+        $role = Role::create(['name' => 'Super Admin']);
+        $role->givePermissionTo('Create Role');
+        $role->givePermissionTo('View Role');
+        $role->givePermissionTo('Edit Role');
+        $role->givePermissionTo('Delete Role');
+        $role->givePermissionTo('Create Admin');
+        $role->givePermissionTo('View Admin');
+        $role->givePermissionTo('Edit Admin');
+        $role->givePermissionTo('Delete Admin');
+        $user->assignRole('Super Admin');
+    }
+
     public function index()
     {
         $data['userCount'] = User::all()->whereNull('deleted_at')->count();

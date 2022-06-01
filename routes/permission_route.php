@@ -1,16 +1,33 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
+
 Route::get('create-permission',function(){
+
     $term = ['Role','Admin','User','Category','SubCategory','Product','Pages'];
+
     foreach ($term as $itemValue) {
-        $name = 'Create '. $itemValue;
-        $create = Permission::create(['name' => $name,'guard_name' => 'admin']);
-        $name = 'View ' . $itemValue;
-        Permission::create(['name' => $name,'guard_name' => 'admin']);
-        $name = 'Edit ' . $itemValue;
-        Permission::create(['name' => $name,'guard_name' => 'admin']);
-        $name = 'Delete ' . $itemValue;
-        Permission::create(['name' => $name,'guard_name' => 'admin']);
+
+        Permission::create([
+            'name' => 'Create ' . $itemValue,
+            'guard_name' => 'admin'
+        ]);
+
+        Permission::create([
+            'name' => 'View ' . $itemValue,
+            'guard_name' => 'admin'
+        ]);
+
+        Permission::create([
+            'name' => 'Edit ' . $itemValue,
+            'guard_name' => 'admin'
+        ]);
+
+        Permission::create([
+            'name' => 'Delete ' . $itemValue,
+            'guard_name' => 'admin'
+        ]);
     }
 });
 

@@ -16,7 +16,8 @@ Route::group(['prefix' => ADMIN_PATH], function() use ($routeResource) {
     Route::post('logout', 'Auth\admin\LoginController@logout')->name('admin.logout');
 
     Route::group(['middleware'=> 'auth:admin', 'namespace' => 'admin'],function () use ($routeResource) {
-        
+
+        Route::get('init', 'DashboardController@initializeApp')->name('admin.init');
         Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
         Route::get('getDashboardUser', 'DashboardController@getUserData');
 
