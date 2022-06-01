@@ -29,7 +29,7 @@
     @include('admin.includes.sidebar')
 
     @yield('content')
-    
+
     {{-- @include('admin.includes.footer') --}}
 </div>
 <!-- Bootstrap -->
@@ -45,6 +45,7 @@
 <script src="{{adminAssets('plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
 <script src="{{adminAssets('plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{adminAssets('dist/js/adminapp.js')}}"></script>
+<script src="{{adminAssets('dist/js/admin.js')}}"></script>
 @yield('customScripts')
 
 </body>

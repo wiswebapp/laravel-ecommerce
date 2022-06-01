@@ -36,6 +36,7 @@
                         @else
                         {{Form::open(['action' => ['admin\RoleController@store_roles'],'method'=>'post','enctype'=>'multipart/form-data'])}}
                         @endif
+                        {{ method_field('PUT') }}
                         <div class="card-body">
 
                             <div class="col-md-8">
@@ -51,7 +52,8 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Roles</label>
-                                    <select name="permissions[]" id="" class="form-control select2" multiple>
+                                    <span>( <input type="checkbox" id="selectAllPermission"> Select All )</span>
+                                    <select name="permissions[]" id="" class="form-control selectPermissions select2" multiple>
                                         <?php $i = 0;?>
                                         @foreach ($data['permission'] as $item)
                                         <?php
