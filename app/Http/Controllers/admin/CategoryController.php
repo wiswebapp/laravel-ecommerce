@@ -31,7 +31,7 @@ class CategoryController extends Controller
         $data['action'] = "Add";
         return view('admin.category.category_action')->with('data',$data);
     }
-    
+
     public function store_category(CreateCategory $request){
         abort_unless($this->checkPermission('Create Category'), 403);
         $category = new Category;
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $category->delete();
         echo 1;
     }
-    
+
     public function subcategory(Request $request){
         abort_unless($this->checkPermission('View SubCategory'), 403);
         $query = Category::where([['parent_id','!=',0]])->orderBy('id', 'desc');
@@ -77,7 +77,7 @@ class CategoryController extends Controller
             $query->where('status', $request->input('status'));
         }
         $data['pageData'] = $query->paginate(10);
-        $data['pageTitle'] = "Sub Category";   
+        $data['pageTitle'] = "Sub Category";
         return view('admin.category.subcategory')->with('data',$data);
     }
     public function create_subcategory(){
@@ -131,16 +131,19 @@ class CategoryController extends Controller
         return response()->json(['success' => true, 'subCatData' => $CatData]);
     }
     public function get_ajax_subcategory(Request $request){
-        abort_unless($this->checkPermission('View SubCategory'), 403);       
-        $subCat = Builder::getSubCategoryData('*',['status'=>'Active','parent_id'=> $request->input('categoryId')]);
+        abort_unless($this->checkPermission('View SubCategory'), 403);
+        $subCat = Builder::getSubCategoryData('*',[
+            'status'=>'Active',
+            'parent_id'=> $request->categoryId
+        ]);
         $subCatData="";
         if( $subCat->count() > 0){
             foreach($subCat as $catData){
-                $selected = ($request->input('selectedId') == $catData->id) ? "selected" : "";
+                $selected = ($request->selectedId == $catData->id) ? "selected" : "";
                 $subCatData .= "<option value='".$catData->id."' $selected>".$catData->category_name."</option>";
             }
         }else{
-            $subCatData .= "<option value=''>Select Category</option>";
+            $subCatData .= "<option value=''>Select Category First</option>";
         }
         return response()->json(['success' => true, 'subCatData' => $subCatData]);
     }

@@ -2,7 +2,7 @@
   $pageData = "";
   $action = $data['action'];
   if($action == "Edit"){
-    $pageData = $data['pageData'];   
+    $pageData = $data['pageData'];
   }
 ?>
 
@@ -66,8 +66,8 @@
                       <label>Product Description</label>
                       <textarea name="product_description" class="form-control wysiwyg-ck {{ $errors->has('product_description') ? 'is-invalid' : '' }}" placeholder="Enter Description">{{old('product_description',$pageData->product_description)}}</textarea>
                   </div>
-                </div>  
-                
+                </div>
+
                 <div class="col-md-8">
                   <div class="form-group">
                       <label>Product Price</label>
@@ -95,7 +95,7 @@
                   </div>
                   </div>
               </div>
-              
+
               </div>
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">{{$data['action']}} Data</button>
@@ -110,7 +110,7 @@
     </section>
   </div>
 
-<script>
+<script type="application/javascript">
   <?php if($action == "Edit"){ ?>
   setCategory('{{$pageData->category_id}}');
   setSubCategory('{{$pageData->category_id}}','{{$pageData->subcategory_id}}');

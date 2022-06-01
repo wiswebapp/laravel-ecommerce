@@ -48,6 +48,7 @@ class UserController extends Controller
         $data['pageTitle'] = "Edit Register User";
         return view('admin.user.users_action')->with('data',$data);
     }
+
     public function update_user(UserStoreRequest $request,$id){
         abort_unless($this->checkPermission('Edit User'), 403);
         $user = User::find($id);
@@ -60,6 +61,7 @@ class UserController extends Controller
         $user->fill($input)->save();
         return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
     }
+    
     public function destroy_user(Request $request){
         abort_unless($this->checkPermission('Delete User'), 403);
         $dataTobeDelete = User::find($request->dataId);

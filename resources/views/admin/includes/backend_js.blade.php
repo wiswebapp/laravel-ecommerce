@@ -30,7 +30,7 @@ function removeDataFromDB(routeUrl,dataId){
         success : function(response) {
             if(response){
                 alert("Data has been removed");
-                location.reload(); 
+                location.reload();
             }
         }
     });
@@ -54,9 +54,8 @@ function setCategory(selectedId=''){
         }
     });
 }
-function setSubCategory(categoryId,selectedId=''){
+function setSubCategory(categoryId, selectedId = ''){
     if(categoryId != ''){
-        //Method1
         $.ajax({
             type : "POST",
             url : '{{route('ajax.getSubCat')}}',
@@ -76,7 +75,6 @@ function setSubCategory(categoryId,selectedId=''){
                 }
             }
         });
-        
     }
 }
 </script>
