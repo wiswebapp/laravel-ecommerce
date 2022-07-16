@@ -8,7 +8,6 @@ use App\Http\Controllers\MyClass\GeneralClass;
 use App\State;
 use App\Exports\GeneralExport;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class GeneralController extends Controller
 {
@@ -29,19 +28,5 @@ class GeneralController extends Controller
         }
 
         return $optionHtml;
-    }
-
-    /**
-     *
-     * This Functions used for export data
-     * all the module export functionality function should be define here
-     * use same format define in existing functions
-     *
-     * @param  Request $request
-     * @return Excel
-     */
-    public function user_export(Request $request) {
-        $fileName = "users_".date("YmdHI").".xlsx";
-        return Excel::download(new GeneralExport($request), $fileName);
     }
 }
