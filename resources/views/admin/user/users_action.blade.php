@@ -2,7 +2,7 @@
   $pageData = "";
   $action = $data['action'];
   if($action == "Edit"){
-    $pageData = $data['pageData'];   
+    $pageData = $data['pageData'];
   }
 ?>
 
@@ -31,12 +31,12 @@
            @include('includes.alert_msg')
             <div class="card">
             @if ($action == "Edit")
-                {{Form::open(['action' => ['admin\UserController@update_user',$pageData->id],'method'=>'post','enctype'=>'multipart/form-data'])}}
+                {{Form::open(['action' => ['admin\UserController@update_user',$pageData->id],'method'=>'put','enctype'=>'multipart/form-data'])}}
             @else
               {{Form::open(['action' => ['admin\UserController@store_user'],'method'=>'post','enctype'=>'multipart/form-data'])}}
             @endif
               <div class="card-body">
-                       
+
                     <div class="col-md-8">
                         <div class="form-group">
                             <label>First Name</label>
@@ -67,7 +67,25 @@
                             <input type="password" name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="Enter Password">
                         </div>
                     </div>
-                  
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Select Country</label>
+                            <select class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" name="country" id="country" onchange="selectState(this.value)">
+                                <option value="">Select Country</option>
+                                @foreach ($data['country'] as $item)
+                                <option <?= ($pageData->country == $item->id) ? 'selected' : ''?> value="<?= $item->id ?>"><?= $item->name ?></option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Select State</label>
+                            <select disabled class="form-control {{ $errors->has('state') ? 'is-invalid' : '' }}" name="state" id="state">
+                                <option value="">Select Country first</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-8">
                         <div class="form-group">
                         <label>Status</label>
@@ -93,4 +111,12 @@
       </div>
     </section>
   </div>
+@endsection
+
+@section('customScripts')
+<script>
+    <?php if($action == "Edit"): ?>
+    selectState('<?=$pageData->country?>', '<?=$pageData->state?>')
+    <?php endif ?>
+</script>
 @endsection

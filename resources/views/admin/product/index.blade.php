@@ -14,7 +14,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>{{$data['pageTitle']}} <a href="{{$routeCreateUrl}}" class="float-right btn btn-sm btn-info"><i class="fa fa-plus fa-sm"></i> Add {{$data['pageTitle']}}</a></h1>
+            <h1>{{$data['pageTitle']}}
+              @can('Create Product')
+              <a href="{{$routeCreateUrl}}" class="float-right btn btn-sm btn-info"><i class="fa fa-plus fa-sm"></i> Add {{$data['pageTitle']}}</a>
+              @endcan
+            </h1>
             <hr>
           </div>
         </div>
@@ -30,7 +34,7 @@
               @include('includes.alert_msg')
               <div class="card-header">
                 <!-- Filter Area -->
-                <form method="GET" action="">                
+                <form method="GET" action="">
                     <div class="row">
                         <div class="col-1"><p style="margin-top: 7px;">Filter Data</p></div>
                         <div class="col-2">
@@ -77,11 +81,17 @@
                                 <td><?=$pageData->category->category_name?></td>
                                 <td><?=$pageData->product_name?></td>
                                 <td><?=formatNum($pageData->price)?></td>
-                                <td><?=$pageData->availblity?></td>
-                                <td><?=$pageData->status?></td>
+                                <td><?=$pageData->is_available?></td>
                                 <td>
-                                  <a href="{{$routeEditUrl.'/'.$pageData->id}}" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</a>
-                                  <span onclick="removeData('product',{{$pageData->id}})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</span>
+                                    {!! generateStatusRow($pageData) !!}
+                                </td>
+                                <td>
+                                  @can('Edit Product')
+                                  {!! generateEditButton($routeEditUrl.'/'.$pageData->id) !!}
+                                  @endcan
+                                  @can('Delete Product')
+                                  {!! generateDeleteButton('product', $pageData->id) !!}
+                                  @endcan
                                 </td>
                             </tr>
                         @endforeach

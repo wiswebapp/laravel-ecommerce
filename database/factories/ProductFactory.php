@@ -12,11 +12,13 @@ $factory->define(Product::class, function (Faker $faker) {
             return factory(Category::class)->create()->id;
         },
         'subcategory_id' => function() {
-            return factory(Category::class)->create()->id;
+            return factory(Category::class)->create([
+                'parent_id' => factory(Category::class)->create()->id,
+            ])->id;
         },
         'product_name' => $faker->name,
-        'product_description' => $faker->sentence,
-        'price' => rand(100,999),
-        'product_image' => 'no-product.jpg',
+        'product_short_description' => $faker->sentence(20),
+        'product_short_description' => $faker->sentence(150),
+        'price' => rand(100,1000),
     ];
 });

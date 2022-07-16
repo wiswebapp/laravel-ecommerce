@@ -9,7 +9,7 @@ class Category extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'categories';
+    protected $table = 'category';
     /**
      * The attributes that are mass assignable.
      *
