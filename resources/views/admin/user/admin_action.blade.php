@@ -2,7 +2,7 @@
   $pageData = "";
   $action = $data['action'];
   if($action == "Edit"){
-    $pageData = $data['pageData'];   
+    $pageData = $data['pageData'];
   }
 ?>
 
@@ -33,18 +33,23 @@
             @if ($action == "Edit")
                 {{Form::open(['action' => ['admin\AdminController@update_admin',$pageData->id],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
             @else
-              {{Form::open(['action' => ['admin\AdminController@store_admin'],'method'=>'post','enctype'=>'multipart/form-data'])}}
+                {{Form::open(['action' => ['admin\AdminController@store_admin'],'method'=>'post','enctype'=>'multipart/form-data'])}}
             @endif
               <div class="card-body">
 
                     <div class="col-md-8">
                       <div class="form-group">
-                          <label>Select Admin type</label>
-                          <select name="role" id="" class="form-control" {{($pageData->id == 1) ? "disabled" : ""}}>
+                          <label>Admin type</label>
+                          <?php if ($pageData->id == 1): ?>
+                          <input type="text" disabled value="{{$data['RollName']}}" class="form-control">
+                          <input type="hidden" value="{{$data['RollName']}}">
+                          <?php else: ?>
+                          <select name="role" id="" class="form-control" {{($pageData->id == 1) ? "readonly" : ""}}>
                             @foreach ($data['roleList'] as $item)
                               <option {{($data['RollName'] == $item->name) ? "selected" : ""}} value="{{$item->name}}">{{$item->name}}</option>
                             @endforeach
                           </select>
+                          <?php endif; ?>
                       </div>
                   </div>
 

@@ -55,15 +55,16 @@ class AdminController extends Controller
     public function update_admin($id, CreateAdminRequest $request)
     {
         abort_unless($this->checkPermission('Edit Admin'), 403);
-        $AdminUser = Admin::find($id);
+        $adminUser = Admin::find($id);
         $input = $request->all();
+        $roleOfAdmin = Role::where('name',$input['role'])->get();
+        unset($input['role']);
         if ($input['password'] == null || empty($input['password'])) {
             unset($input['password']);
         }
-        $ROLE_OF_ADMIN = $input['role'];
-        unset($input['role']);
-        $AdminUser->update($input);
-        $AdminUser->syncRoles($ROLE_OF_ADMIN);
+
+        $adminUser->update($input);
+        $adminUser->assignRole($roleOfAdmin);
         return redirect()->route('admin.admin')->with('success', 'Data Updated Successfuly');
     }
 

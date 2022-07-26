@@ -81,7 +81,9 @@ $routeEditUrl = url(config('app.admin_path_name').'/admin/edit/');
                                         <td><?=toDate($pageData->created_at)?></td>
                                         <td><?=$pageData->name?></td>
                                         <td><?=$pageData->email?></td>
-                                        <td><?=$pageData->getRoleNames()->toArray()[0]?></td>
+                                        <td>
+                                            <label class="btn btn-block btn-outline-warning btn-sm"><?=$pageData->getRoleNames()->toArray()[0]?></label>
+                                        </td>
                                         <td>
                                             {!! generateStatusRow($pageData) !!}
                                         </td>

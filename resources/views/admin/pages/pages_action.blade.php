@@ -31,7 +31,7 @@
            @include('includes.alert_msg')
             <div class="card">
             @if ($action == "Edit")
-                {{Form::open(['action' => ['admin\PagesController@update_pages',$pageData->id],'method'=>'post','enctype'=>'multipart/form-data'])}}
+                {{Form::open(['action' => ['admin\PagesController@update_pages',$pageData->id],'method'=>'PATCH','enctype'=>'multipart/form-data'])}}
             @else
               {{Form::open(['action' => ['admin\PagesController@store_pages'],'method'=>'post','enctype'=>'multipart/form-data'])}}
             @endif

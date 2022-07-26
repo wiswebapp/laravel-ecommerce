@@ -2,7 +2,7 @@
   $pageData = "";
   $action = $data['action'];
   if($action == "Edit"){
-    $pageData = $data['pageData'];   
+    $pageData = $data['pageData'];
   }
 ?>
 
@@ -36,14 +36,14 @@
               {{Form::open(['action' => ['admin\CategoryController@store_category'],'method'=>'post','enctype'=>'multipart/form-data'])}}
             @endif
               <div class="card-body">
-                       
+
                     <div class="col-md-8">
                         <div class="form-group">
                             <label>Category Name</label>
                             <input type="text" name="category_name" value="{{old('category_name',$pageData->category_name)}}" class="form-control {{ $errors->has('category_name') ? 'is-invalid' : '' }}" placeholder="Enter Page Name">
                         </div>
                     </div>
-                  
+
                     <div class="col-md-8">
                         <div class="form-group">
                         <label>Status</label>

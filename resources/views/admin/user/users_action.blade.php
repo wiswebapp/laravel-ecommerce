@@ -31,9 +31,9 @@
            @include('includes.alert_msg')
             <div class="card">
             @if ($action == "Edit")
-                {{Form::open(['action' => ['admin\UserController@update_user',$pageData->id],'method'=>'put','enctype'=>'multipart/form-data'])}}
+                {{Form::open(['action' => ['admin\UserController@update_user',$pageData->id],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
             @else
-              {{Form::open(['action' => ['admin\UserController@store_user'],'method'=>'post','enctype'=>'multipart/form-data'])}}
+                {{Form::open(['action' => ['admin\UserController@store_user'],'method'=>'post','enctype'=>'multipart/form-data'])}}
             @endif
               <div class="card-body">
 

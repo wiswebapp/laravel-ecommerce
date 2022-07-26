@@ -34,7 +34,7 @@
                         @if ($action == "Edit")
                         {{Form::open(['action' => ['admin\RoleController@update_roles',$pageData->id],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
                         @else
-                        {{Form::open(['action' => ['admin\RoleController@store_roles'],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
+                        {{Form::open(['action' => ['admin\RoleController@store_roles'],'method'=>'POST','enctype'=>'multipart/form-data'])}}
                         @endif
                         <div class="card-body">
 
