@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegisterEvent;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -22,7 +24,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers,Notifiable;
 
     /**
      * Where to redirect users after registration.
@@ -65,13 +67,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $userCreate = User::create([
+        $userData = [
             'fname' => $data['fname'],
             'lname' => $data['lname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'status' => 'Active'
-        ]);
+        ];
+        
+        $userCreate = User::create($userData);
+        
+        event(new UserRegisterEvent($userData) );
+
         return $userCreate;
     }
 }

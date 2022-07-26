@@ -1,39 +1,25 @@
 <?php
+namespace Database\Factories;
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
-use App\Admin;
-use App\User;
-use Faker\Generator as Faker;
-use Illuminate\Support\Str;
+class UserFactory extends Factory
+{
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+    public function definition(){
 
-$factory->define(User::class, function (Faker $faker) {
-    return [
-        'fname' => $faker->firstName,
-        'lname' => $faker->lastName,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'phonecode' => now(),
-        'phone' => $faker->PhoneNumber,
-        'phone_verified_at' => now(),
-        'password' => '$2y$10$cwJE.SURWdZ0YFAiuUB5Ne.Ei9X0VGwMtWfzuaMxfRZgOIx4J/kbG', // 123456
-    ];
-});
-$factory->define(Admin::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => 'admin@example.com',
-        'password' => '$2y$10$cwJE.SURWdZ0YFAiuUB5Ne.Ei9X0VGwMtWfzuaMxfRZgOIx4J/kbG', // 123456
-    ];
-});
+        return [
+            'fname' => $this->faker->firstName,
+            'lname' => $this->faker->lastName,
+            'email' => $this->faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'phonecode' => now(),
+            'phone' => $this->faker->PhoneNumber,
+            'country' => 101,
+            'state' => 4133,
+            'phone_verified_at' => now(),
+            'password' => '$2y$10$xSugoyKv765TY8DsERJ2/.mPIOwLNdM5Iw1n3x1XNVymBlHNG4cX6', // 123456
+        ];
+    }
+}

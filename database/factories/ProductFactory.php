@@ -1,22 +1,21 @@
 <?php
+namespace Database\Factories;
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Category;
-use App\Product;
-use Faker\Generator as Faker;
+class ProductFactory extends Factory
+{
 
-$factory->define(Product::class, function (Faker $faker) {
-    return [
-        'category_id' => function() {
-            return factory(Category::class)->create()->id;
-        },
-        'subcategory_id' => function() {
-            return factory(Category::class)->create()->id;
-        },
-        'product_name' => $faker->name,
-        'product_description' => $faker->sentence,
-        'price' => rand(100,999),
-        'product_image' => 'no-product.jpg',
-    ];
-});
+    public function definition(){
+
+        return [
+            'category_id' => "1",
+            'subcategory_id' => "2",
+            'product_name' => $this->faker->name(),
+            'product_short_description' => $this->faker->sentence(20),
+            'product_long_description' => $this->faker->sentence(150),
+            'price' => rand(100,1000),
+            'stock_count' => rand(1,20),
+        ];
+    }
+}

@@ -2,22 +2,40 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $table = 'products';
-    
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->product_slug = Str::of($model->product_name)->slug('-');
+        });
+
+        self::updating(function ($model) {
+            $model->product_slug = Str::of($model->product_name)->slug('-');
+        });
+    }
+
     protected $fillable = [
-        'category_id', 'subcategory_id', 'product_name','product_description','price','product_image','availblity','status'
+        'category_id',
+        'subcategory_id',
+        'product_name',
+        'product_short_description',
+        'product_long_description',
+        'price',
+        'stock_count',
+        'is_available',
+        'status'
     ];
 
     public function category(){
