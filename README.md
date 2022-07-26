@@ -37,6 +37,21 @@ This all things is pre-built with permissions and admin roles. You just have to 
 ## Contribution
 
 I love to welcome your contributions if you know Laravel / Vue.js.
+### Steps to Run the project
+- Clone the project from github
+- Copy Env File and fill appropriate details
+- Run command `php artisan migrate`
+- Run command `php artisan db:seed`
+- Start the artisan server
+- Than go to http://127.0.0.1:8000/create-permission to create appropriate permissions for application admin
+- If Admin login credentials not works just add following password in database manually
+    `$2y$10$xSugoyKv765TY8DsERJ2/.mPIOwLNdM5Iw1n3x1XNVymBlHNG4cX6`
+- And than login with admin email and password `123456`
+- All Set. Done +1 !
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Tarang Panchal via [tarang.webinfosolutions@gmail.com](mailto:tarang.webinfosolutions@gmail.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
