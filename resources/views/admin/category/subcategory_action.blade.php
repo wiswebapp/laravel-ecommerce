@@ -2,7 +2,7 @@
   $pageData = "";
   $action = $data['action'];
   if($action == "Edit"){
-    $pageData = $data['pageData'];   
+    $pageData = $data['pageData'];
   }
 ?>
 
@@ -31,7 +31,7 @@
            @include('includes.alert_msg')
             <div class="card">
             @if ($action == "Edit")
-                {{Form::open(['action' => ['admin\CategoryController@update_subcategory',$pageData->id],'method'=>'post','enctype'=>'multipart/form-data'])}}
+                {{Form::open(['action' => ['admin\CategoryController@update_subcategory',$pageData->id],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
             @else
               {{Form::open(['action' => ['admin\CategoryController@store_subcategory'],'method'=>'post','enctype'=>'multipart/form-data'])}}
             @endif
@@ -50,10 +50,10 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label>SubCategory Name</label>
-                            <input type="text" name="category_name" value="{{old('category_name',$pageData->category_name)}}" class="form-control {{ $errors->has('category_name') ? 'is-invalid' : '' }}" placeholder="Enter Page Name">
+                            <input type="text" name="category_name" value="{{old('category_name',$pageData->category_name)}}" class="form-control {{ $errors->has('category_name') ? 'is-invalid' : '' }}" placeholder="Enter Here">
                         </div>
                     </div>
-                  
+
                     <div class="col-md-8">
                         <div class="form-group">
                         <label>Status</label>

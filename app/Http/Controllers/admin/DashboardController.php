@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\User;
+use App\Product;
 use App\Category;
 use App\Http\Controllers\Controller;
-use App\Product;
-use App\User;
 
 class DashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
 
     public function index()
     {
@@ -21,5 +17,11 @@ class DashboardController extends Controller
         $data['categoryCount'] = Category::all()->where('parent_id',0)->whereNull('deleted_at')->count();
         $data['subCategoryCount'] = Category::all()->where('parent_id','!=',0)->whereNull('deleted_at')->count();
         return view('admin.dashboard')->with('data',$data);
+    }
+
+    public function getUserData()
+    {
+        $data['userData'] = User::all()->whereNull('deleted_at')->take(10);
+        return $data;
     }
 }

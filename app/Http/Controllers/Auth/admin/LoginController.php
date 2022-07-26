@@ -22,6 +22,13 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * Url redirect users after login.
+     *
+     * @var string
+     */
+    protected $loginUrl;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -29,14 +36,8 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest:admin')->except('logout');
+        $this->loginUrl = '/'.config('app.admin_path_name').'/login';
     }
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/'.ADMIN_PATH.'/dashboard';
 
 
     public function username(){
@@ -61,7 +62,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);        
+        $this->validateLogin($request);
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -147,7 +148,9 @@ class LoginController extends Controller
     {
         if ($user->status != "Active") {
             $this->guard()->logout();
-            return redirect('/'.ADMIN_PATH.'/login')->with('error', 'Looks Like Your status is InActive');
+            return redirect($this->loginUrl)->with('error', 'Looks Like Your status is InActive');
+        } else {
+            return redirect($this->loginUrl);
         }
     }
 
@@ -182,7 +185,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('/'.ADMIN_PATH.'/login');
+        return redirect($this->loginUrl);
     }
 
     /**
@@ -194,5 +197,5 @@ class LoginController extends Controller
     {
         return Auth::guard('admin');
     }
-        
+
 }

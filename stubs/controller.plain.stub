@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class {{ class }} extends Controller
+{
+    public function index(){
+        abort_unless($this->checkPermission('View PERMISSION_NAME'), 403);
+        
+        // Code
+    }
+}

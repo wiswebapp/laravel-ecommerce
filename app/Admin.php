@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles, HasFactory;
 
     protected $table = 'admin';
     /**
@@ -16,7 +19,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phonecode', 'phone', 'imgName'
+        'name', 'email', 'password', 'phonecode', 'phone', 'imgName','status'
     ];
 
     /**
@@ -27,4 +30,15 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->password = Hash::make($model->password);;
+        });
+        self::updating(function ($model) {
+            $model->password = Hash::make($model->password);;
+        });
+    }
 }

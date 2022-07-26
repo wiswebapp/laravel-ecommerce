@@ -2,13 +2,15 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable,SoftDeletes;
+    use Notifiable,SoftDeletes, HasRoles, HasFactory;
 
     protected $table = 'users';
     /**
@@ -17,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'fname', 'lname', 'email', 'password', 'phonecode' ,'phone' ,'country' ,'state' ,'city' ,'zipcode' ,'dob' ,'imgName'
+        'fname', 'lname', 'email', 'password', 'phonecode' ,'phone' ,'country' ,'state' ,'city' ,'zipcode' ,'dob' ,'imgName', 'status'
     ];
 
     /**
@@ -38,7 +40,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getUserCountry()
+    {
+        return $this->belongsTo(Country::class, 'country', 'id');
+    }
+
+    public function getUserState()
+    {
+        return $this->belongsTo(State::class, 'state', 'id');
+    }
+
     public function getFullNameAttribute(){
        return $this->fname . ' ' . $this->lname;
     }
+
 }

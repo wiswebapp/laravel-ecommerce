@@ -21,10 +21,10 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
 
             if($guard == 'admin'){
-                return redirect('/'.ADMIN_PATH.'/dashboard');
+                return redirect('/'.config('app.admin_path_name').'/dashboard');
             }else{
                 return redirect('/dashboard');
-            }           
+            }
 
         }
 

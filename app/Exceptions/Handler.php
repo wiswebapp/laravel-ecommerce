@@ -53,18 +53,18 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
-    
+
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
-        
+
         $guard = $exception->guards()[0];
 
         $route = '';
         if($guard == 'admin'){
-            $route = '/'.ADMIN_PATH.'/login';
+            $route = '/'.config('app.admin_path_name').'/login';
         }else{
             $route = '/login';
         }

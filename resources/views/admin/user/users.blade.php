@@ -1,9 +1,9 @@
 @php
     $routeUrl = route('admin.user');
     $routeCreateUrl = route('admin.create_user');
-    $routeEditUrl = url(ADMIN_PATH.'/user/edit/');
+    $routeEditUrl = url(config('app.admin_path_name').'/user/edit/');
+    $pageData = $data['pageData'];
 @endphp
-
 @section('title','Product')
 
 @extends('admin.layouts.app_admin')
@@ -14,7 +14,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>{{$data['pageTitle']}} <a href="{{$routeCreateUrl}}" class="float-right btn btn-sm btn-info"><i class="fa fa-plus fa-sm"></i> Add {{$data['pageTitle']}}</a></h1>
+            <h1>{{$data['pageTitle']}}
+              @can('Create User')
+              <a href="{{$routeCreateUrl}}" class="float-right btn btn-sm btn-info"><i class="fa fa-plus fa-sm"></i> Add {{$data['pageTitle']}}</a>
+              @endcan
+            </h1>
             <hr>
           </div>
         </div>
@@ -30,7 +34,7 @@
               @include('includes.alert_msg')
               <div class="card-header">
                 <!-- Filter Area -->
-                <form method="GET" action="">                
+                <form method="GET" action="" id="filter-form">
                     <div class="row">
                         <div class="col-1"><p style="margin-top: 7px;">Filter Data</p></div>
                         <div class="col-2">
@@ -48,53 +52,71 @@
                           <a href="{{$routeUrl}}" class="btn btn-default">Reset</a>
                         </div>
                         <div class="col-5">
-                        {{-- <a href="{{$routeCreateUrl}}" class="btn btn-default" style="float: right">Create Page</a> --}}
+                        <div class="export-section" style="display: none">
+                            <a data-exportType="user" class="export-data btn btn-default" style="float: right">Export</a>
+                        </div>
                       </div>
                     </div>
                 </form>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-bordered text-nowrap">
-                  <thead>
-                    <tr>
-                      <th><input type="checkbox"></th>
-                      <th>Created On</th>
-                      <th>Full Name</th>
-                      <th>Mobile</th>
-                      <th>Email</th>
-                      <th>Status</th>
-                      <th style="width: 15%">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @if (count($data['pageData']) > 0)
-                        @foreach($data['pageData'] as $pageData)
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><?=toDate($pageData->created_at)?></td>
-                                <td><?=$pageData->FullName?></td>
-                                <td><?=$pageData->phone?></td>
-                                <td><?=$pageData->email?></td>
-                                <td><?=$pageData->status?></td>
-                                <td>
-                                  <a href="{{$routeEditUrl.'/'.$pageData->id}}" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Edit</a>
-                                  <span onclick="removeData('user',{{$pageData->id}})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</span>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                    <tr class="text-danger">
-                      <td colspan="10">Sorry No Data Found</td>
-                    </tr>
-                    @endif
-                  </tbody>
-                </table>
-              </div>
-              <div class="pull-right">
-                @if (count($data['pageData']) > 0)
-                {{$data['pageData']->links('pagination::bootstrap-4')}}
-                @endif
+              <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered text-nowrap">
+                            <thead>
+                                <tr>
+                                <th><input class="select-all-cb" type="checkbox"></th>
+                                <th>Created On</th>
+                                <th>Full Name</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th style="width: 15%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (count($pageData) > 0)
+                                    @foreach($pageData as $row)
+                                        <tr>
+                                            <td><input type="checkbox" class="data-cb" data-id="<?=$row->id?>"></td>
+                                            <td><?=toDate($row->created_at)?></td>
+                                            <td><?=$row->FullName?></td>
+                                            <td><?=$row->phone?></td>
+                                            <td><?=$row->email?></td>
+                                            <td>
+                                                {!! generateStatusRow($row) !!}
+                                            </td>
+                                            <td>
+                                            @can('Edit User')
+                                            {!! generateEditButton($routeEditUrl.'/'.$row->id) !!}
+                                            @endcan
+                                            @can('Delete User')
+                                            {!! generateDeleteButton('user', $row->id) !!}
+                                            @endcan
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                <tr class="text-danger">
+                                <td colspan="10">Sorry No Data Found</td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div style="float: right">
+                            @if (count($pageData) > 0)
+                            {{$pageData->links('pagination::bootstrap-4')}}
+                            @endif
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
