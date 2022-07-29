@@ -60,7 +60,6 @@ $routeEditUrl = url(config('app.admin_path_name').'/pages/edit/');
                             <table class="table table-bordered text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox"></th>
                                         <th>Created On</th>
                                         <th>Page Name</th>
                                         <th>Page Meta Keyword</th>
@@ -72,7 +71,6 @@ $routeEditUrl = url(config('app.admin_path_name').'/pages/edit/');
                                     @if (count($data['pageData']) > 0)
                                     @foreach($data['pageData'] as $pageData)
                                     <tr>
-                                        <td><input type="checkbox"></td>
                                         <td><?=toDate($pageData->created_at)?></td>
                                         <td><?=$pageData->page_title?></td>
                                         <td><?=$pageData->page_meta_keyword?></td>
@@ -80,7 +78,7 @@ $routeEditUrl = url(config('app.admin_path_name').'/pages/edit/');
                                             {!! generateStatusRow($pageData) !!}
                                         </td>
                                         <td>
-                                            @can('View Pages')
+                                            @can('Edit Pages')
                                             {!! generateEditButton($routeEditUrl.'/'.$pageData->id) !!}
                                             @endcan
                                         </td>

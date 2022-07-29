@@ -64,7 +64,6 @@ $routeEditUrl = url(config('app.admin_path_name').'/admin/edit/');
                             <table class="table table-bordered text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox"></th>
                                         <th>Created On</th>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -77,7 +76,6 @@ $routeEditUrl = url(config('app.admin_path_name').'/admin/edit/');
                                     @if (count($data['pageData']) > 0)
                                     @foreach($data['pageData'] as $pageData)
                                     <tr>
-                                        <td><input type="checkbox"></td>
                                         <td><?=toDate($pageData->created_at)?></td>
                                         <td><?=$pageData->name?></td>
                                         <td><?=$pageData->email?></td>

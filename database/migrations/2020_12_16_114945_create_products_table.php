@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('product_name');
             $table->text('product_short_description');
             $table->text('product_long_description');
+            $table->string('product_image');
             $table->float('price',10,2);
             $table->integer('stock_count')->unsigned();
             $table->enum('is_available',['Yes','No'])->default('Yes');

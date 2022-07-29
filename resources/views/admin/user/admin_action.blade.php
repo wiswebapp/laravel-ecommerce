@@ -62,6 +62,13 @@
 
                   <div class="col-md-8">
                       <div class="form-group">
+                          <label>Admin Phone</label>
+                          <input type="text" name="phone" value="{{old('phone',$pageData->phone)}}" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" placeholder="Enter Mobile Number">
+                      </div>
+                  </div>
+
+                  <div class="col-md-8">
+                      <div class="form-group">
                           <label>Email Address (Username)</label>
                           <input type="email" name="email" value="{{old('email',$pageData->email)}}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Enter Email">
                       </div>

@@ -10,6 +10,11 @@ class Category extends Model
 {
     use SoftDeletes, HasFactory;
 
+    /**
+     * Table name
+     *
+     * @var string
+     */
     protected $table = 'category';
     /**
      * The attributes that are mass assignable.
@@ -20,18 +25,16 @@ class Category extends Model
         'category_name', 'parent_id', 'status',
     ];
 
-    public function parent()
-    {
+    public function parent() {
         return $this->belongsTo(Category::class,'parent_id');
     }
 
-    public function children()
-    {
+    public function children() {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    public function products()
-    {
+    public function products() {
         return $this->hasMany(Product::class,'category_id','id');
     }
+
 }

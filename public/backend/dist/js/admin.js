@@ -11,6 +11,84 @@ function getAdminPath() {
     });
 }
 
+function setCategoryAjax(routeUrl, selectedId='') {
+    $.ajax({
+        type: "POST",
+        url: routeUrl,
+        data: { selectedId:selectedId },
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if(response.success){
+                $("#category").html(response.subCatData);
+            } else {
+                fireAlert('danger', 'Whoops !', 'An Unexpected error has been occured !')
+            }
+        },
+        error: function(){
+            fireAlert('', 'Whoops !', 'An Unexpected error has been occured !')
+        }
+    });
+}
+
+function removeSingleData(routeUrl, htmlText, dataId) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure ?',
+        html: '<i><b>Note :</b> ' + htmlText + '</i>',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type : "DELETE",
+                url : routeUrl,
+                dataType: 'json',
+                headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+                data : { dataId: dataId },
+                success : function(response) {
+                    if (response) {
+                        location.reload();
+                    } else {
+                        fireAlert('danger', 'Whoops !', 'An Unexpected error has been occured !')
+                    }
+                },
+                error: function(){
+                    fireAlert('', 'Whoops !', 'Seems like you don\'t have permission to remove.')
+                }
+            });
+        }
+    })
+}
+
+async function removeMultipleData(exportType, selectedIds) {
+    const admin_path  = await getAdminPath();
+    const ajaxUrl = '/' + admin_path + '/' + exportType + '/removeMultiple';
+
+    $.ajax({
+        type : "DELETE",
+        dataType: 'json',
+        url: ajaxUrl,
+        headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+        data : {
+            exportType: exportType,
+            selectedIds: selectedIds
+        },
+        success : function(response) {
+            if (response) {
+                location.reload();
+            } else {
+                fireAlert('danger', 'Whoops !', 'An Unexpected error has been occured !')
+            }
+        },
+        error: function(){
+            fireAlert('', 'Whoops !', 'Seems like you don\'t have permission to remove.')
+        }
+    });
+}
+
 async function selectState(countryId, selectedState = '') {
     const admin_path  = await getAdminPath();
     $.ajax({
@@ -37,6 +115,22 @@ async function exportData(exportType, formData, selectedIds = "") {
     window.location.href = url
 }
 
+async function exportAllData(exportType) {
+    const admin_path  = await getAdminPath();
+    const url = "/" + admin_path + "/" + exportType + "/export-data?exportType=" + exportType + "&exportAll=Yes";
+    window.location.href = url
+}
+
+function fireAlert(icon, title, note) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        html: '<b>Note :</b> ' + note,
+        showCancelButton: false,
+        confirmButtonText: 'Okay',
+        allowOutsideClick: false
+    })
+}
 
 $(document).ready(function(){
 
@@ -92,4 +186,30 @@ $(document).ready(function(){
         exportData(exportType, filterForm, selectedIds)
     })
 
+    $(".export-all-data").click(function() {
+        var exportType = $(this).attr("data-exportType");
+        exportAllData(exportType)
+    })
+
+    $(".delete-all-data").click(function() {
+        var exportType = $(this).attr("data-deletetype");
+        var selectedIds = [];
+        $('.data-cb').each(function() {
+            if($(this).is(':checked')) {
+                selectedIds.push($(this).attr('data-id'));
+            }
+        });
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure ?',
+            html: '<i><b>Note :</b> This will remove selected '+ selectedIds.length +' data</i>',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                removeMultipleData(exportType, selectedIds)
+            }
+        })
+    })
 })

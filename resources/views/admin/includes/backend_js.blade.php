@@ -1,5 +1,4 @@
 <script>
-
 function removeData(dataType, dataId) {
     htmlText = 'This data will not be retrived once deleted';
     if(dataType == "product"){
@@ -15,44 +14,17 @@ function removeData(dataType, dataId) {
         routeUrl = '{{route('admin.destroy_admin')}}';
     }
 
-    removeDataFromDB(routeUrl, htmlText, dataId);
+    removeSingleData(routeUrl, htmlText, dataId);
 }
 
-function removeDataFromDB(routeUrl, htmlText, dataId) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Are you sure?',
-        html: '<i><b>Note :</b> ' + htmlText + '</i>',
-        showCancelButton: true,
-        confirmButtonText: 'Delete',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type : "DELETE",
-                url : routeUrl,
-                data : {
-                    "_token": "{{ csrf_token() }}",
-                    dataId: dataId
-                },
-                success : function(response) {
-                    location.reload();
-                }
-            });
-        }
-    })
-}
-
+<?php if( in_array(\Request::route()->getName(), ['admin.create_product', 'admin.edit_product'])) { ?>
 function setCategory(selectedId='') {
     $.ajax({
         type : "POST",
         url : '{{route('ajax.getCat')}}',
-        data : {
-            selectedId:selectedId
-        },
+        data : { selectedId:selectedId },
         dataType: 'json',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
+        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         success : function(response) {
             if(response.success){
                 $("#category").html(response.subCatData);
@@ -71,9 +43,7 @@ function setSubCategory(categoryId, selectedId = '') {
                 selectedId:selectedId
             },
             dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             success : function(response) {
                 if(response.success){
                     $("#subCategory").html(response.subCatData);
@@ -84,4 +54,5 @@ function setSubCategory(categoryId, selectedId = '') {
         });
     }
 }
+<?php  } ?>
 </script>

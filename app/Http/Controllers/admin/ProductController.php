@@ -3,68 +3,79 @@ namespace App\Http\Controllers\admin;
 
 use App\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProduct;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 
-class ProductController extends Controller
+class ProductController extends FilterController
 {
-    public function product(Request $request){
+    public function product(Request $request) {
         abort_unless($this->checkPermission('View Product'), 403);
-        $query = Product::whereNull('deleted_at')->orderBy('id', 'desc');
-        if(!empty($request->input('name'))){
-            $query->where('product_name','LIKE','%'. $request->input('name').'%');
-        }
-        if(!empty($request->input('status'))){
-            $query->where('status', $request->input('status'));
-        }
+        $query = $this->filterProductData($request);
         $data['pageData'] = $query->paginate(10);
         $data['pageTitle'] = "Product";
+
         return view('admin.product.index')->with('data',$data);
     }
 
-    public function create_product(){
+    public function create_product() {
         abort_unless($this->checkPermission('Create Product'), 403);
         $data['action'] = "Add";
         $data['pageTitle'] = "Add Product";
         $data['pageData']['category'] = Builder::getCategoryData();
+
         return view('admin.product.product_action')->with('data',$data);
     }
 
-    public function store_product(CreateProduct $request){
+    public function store_product(CreateProduct $request) {
         abort_unless($this->checkPermission('Create Product'), 403);
-
         $newFileName = "";
+
         if ($request->hasFile('product_image')) {
             $extension = $request->file('product_image')->extension();
             $newFileName = "PRODUCT_".time().".".$extension;
             $uploadPath = '/public/product/';
-            if(!Storage::exists($uploadPath)){
+            if (! Storage::exists($uploadPath)) {
                 Storage::makeDirectory($uploadPath);
             }
-            $request->file('product_image')->storeAs($uploadPath,$newFileName);
+            $request->file('product_image')->storeAs($uploadPath, $newFileName);
         }
-
-        $Product = new Product();
+        $product = new Product();
         $input = $request->all();
+        unset($input['_token']);
         $input['product_image'] = $newFileName;
-        $Product::Create($input);
+        $product::insert($input);
+
         return redirect()->route('admin.product')->with('success','Data Updated Successfuly');
     }
 
-    public function edit_product($id){
+    public function edit_product($id) {
         abort_unless($this->checkPermission('Edit Product'), 403);
         $data['action'] = "Edit";
         $data['pageData'] = Product::find($id);
         $data['pageTitle'] = "Edit Product";
         $data['pageData']['category'] = Builder::getCategoryData();
+
         return view('admin.product.product_action')->with('data',$data);
     }
 
-    public function update_product($id, CreateProduct $request){
+    public function update_product($id, CreateProduct $request) {
         abort_unless($this->checkPermission('Edit Product'), 403);
+        $newFileName = "";
         $product = Product::find($id);
+
+        if ($request->hasFile('product_image')) {
+            $currentImage = $product->product_image;
+            $extension = $request->file('product_image')->extension();
+            $newFileName = "PRODUCT_".time().".".$extension;
+            $uploadPath = '/public/product/';
+            $fileStoragePath = public_path('storage/product/'. $currentImage);
+            if ( file_exists($fileStoragePath)) {
+                unlink($fileStoragePath);
+            }
+            $request->file('product_image')->storeAs($uploadPath, $newFileName);
+            $product->product_image = $newFileName;
+        }
         $update = $product->fill($request->all())->save();
         if($update):
             return redirect()->route('admin.product')->with('success','Data Updated Successfuly');
@@ -73,7 +84,7 @@ class ProductController extends Controller
         endif;
     }
 
-    public function destroy_product( Request $request){
+    public function destroy_product( Request $request) {
         abort_unless($this->checkPermission('Delete Product'), 403);
         $product = Product::find($request->dataId);
         $product->delete();

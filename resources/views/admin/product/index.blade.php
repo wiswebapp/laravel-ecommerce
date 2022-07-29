@@ -52,8 +52,8 @@
                           <a href="{{$routeUrl}}" class="btn btn-default">Reset</a>
                         </div>
                         <div class="col-5">
-                        {{-- <a href="{{$routeCreateUrl}}" class="btn btn-default" style="float: right">Create Page</a> --}}
-                      </div>
+                            {!! generateExportSection('product') !!}
+                        </div>
                     </div>
                 </form>
               </div>
@@ -62,12 +62,13 @@
                 <table class="table table-bordered text-nowrap">
                   <thead>
                     <tr>
-                      <th><input type="checkbox"></th>
-                      <th>Created On</th>
+                      <th><input type="checkbox" class="select-all-cb"></th>
+                      <th>Image</th>
                       <th>Category</th>
                       <th>Product name</th>
                       <th>Product Price</th>
                       <th>Availiblity</th>
+                      <th>Stock Count</th>
                       <th>Status</th>
                       <th style="width: 15%">Action</th>
                     </tr>
@@ -76,12 +77,13 @@
                     @if (count($data['pageData']) > 0)
                         @foreach($data['pageData'] as $pageData)
                             <tr>
-                                <td><input type="checkbox"></td>
-                                <td><?=toDate($pageData->created_at)?></td>
+                                <td><input type="checkbox" data-id="{{$pageData->id}}" class="data-cb"></td>
+                                <td><img style="height:100px;width:100px;" class="img img-thumbnail" src="<?=(! empty($pageData->product_image) ? '/storage/product/'.$pageData->product_image : "https://dummyimage.com/100x100/000/fff&text=No+Image")?>" alt="No Image Availble"></td>
                                 <td><?=$pageData->category->category_name?></td>
                                 <td><?=$pageData->product_name?></td>
                                 <td><?=formatNum($pageData->price)?></td>
                                 <td><?=$pageData->is_available?></td>
+                                <td><?=$pageData->stock_count?></td>
                                 <td>
                                     {!! generateStatusRow($pageData) !!}
                                 </td>

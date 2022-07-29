@@ -52,8 +52,8 @@
                           <a href="{{$routeUrl}}" class="btn btn-default">Reset</a>
                         </div>
                         <div class="col-5">
-                        {{-- <a href="{{$routeCreateUrl}}" class="btn btn-default" style="float: right">Create Page</a> --}}
-                      </div>
+                            {!! generateExportSection('subcategory') !!}
+                        </div>
                     </div>
                 </form>
               </div>
@@ -62,7 +62,7 @@
                 <table class="table table-bordered text-nowrap">
                   <thead>
                     <tr>
-                      <th><input type="checkbox"></th>
+                      <th><input type="checkbox" class="select-all-cb"></th>
                       <th>Created On</th>
                       <th>SubCategory name</th>
                       <th>Category</th>
@@ -74,7 +74,7 @@
                     @if (count($data['pageData']) > 0)
                         @foreach($data['pageData'] as $pageData)
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" data-id="{{$pageData->id}}" class="data-cb"></td>
                                 <td><?=toDate($pageData->created_at)?></td>
                                 <td><?=$pageData->category_name?></td>
                                 <td><?=$pageData->parent->category_name?></td>

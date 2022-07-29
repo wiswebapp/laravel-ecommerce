@@ -14,8 +14,7 @@ class UserController extends FilterController
 
     public function user(Request $request) {
         abort_unless($this->checkPermission('View User'), 403);
-        $query = User::whereNull('deleted_at')->orderBy('id', 'desc');
-        $query = $this->filterUserData($request, $query);
+        $query = $this->filterUserData($request);
         //Assiging Data to context
         $data['pageData'] = $query->paginate(10)->appends($request->query());
         $data['pageTitle'] = "Register Users";
@@ -23,11 +22,12 @@ class UserController extends FilterController
         return view('admin.user.users')->with('data', $data);
     }
 
-    public function create_user(Request $request) {
+    public function create_user() {
         abort_unless($this->checkPermission('Create User'), 403);
         $data['action'] = "Add";
         $data['pageTitle'] = "Add Register User";
         $data['country'] = $this->getCountry();
+
         return view('admin.user.users_action')->with('data',$data);
     }
 
@@ -37,6 +37,7 @@ class UserController extends FilterController
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user->fill($input)->save();
+
         return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
     }
 
@@ -46,6 +47,7 @@ class UserController extends FilterController
         $data['pageData'] = User::find($id);
         $data['pageTitle'] = "Edit Register User";
         $data['country'] = $this->getCountry();
+
         return view('admin.user.users_action')->with('data',$data);
     }
 
@@ -59,13 +61,30 @@ class UserController extends FilterController
             $input['password'] = Hash::make($input['password']);
         }
         $user->fill($input)->save();
+
         return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
     }
 
     public function destroy_user(Request $request) {
         abort_unless($this->checkPermission('Delete User'), 403);
         $dataTobeDelete = User::find($request->dataId);
-        $dataTobeDelete->delete();
-        echo 1;
+        if($dataTobeDelete->delete()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function destroy_multiple_user(Request $request) {
+        abort_unless($this->checkPermission('Delete User'), 403);
+        $requestData = $request->all();
+        $selectedIds = $requestData['selectedIds'];
+
+        $dataTobeDelete = User::whereIn('id', $selectedIds);
+        if($dataTobeDelete->delete()) {
+            return true;
+        }
+
+        return false;
     }
 }

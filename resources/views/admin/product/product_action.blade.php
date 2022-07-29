@@ -85,7 +85,7 @@
                         </div>
                     </div>
 
-                    {{-- <div class="col-md-8">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <label>Product Image</label><br>
                             @if ($pageData->product_image != "")
@@ -93,7 +93,7 @@
                             @endif
                             <input type="file" name="product_image" class="form-control {{ $errors->has('product_image') ? 'is-invalid' : '' }}" >
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="col-md-8">
                         <div class="form-group">

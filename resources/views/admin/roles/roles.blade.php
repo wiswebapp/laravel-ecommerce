@@ -34,7 +34,6 @@ $routeEditUrl = url(config('app.admin_path_name').'/roles/edit/');
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox"></th>
                                         <th>Role Name</th>
                                         <th>Permissions</th>
                                         <th style="width: 15%">Action</th>
@@ -44,7 +43,6 @@ $routeEditUrl = url(config('app.admin_path_name').'/roles/edit/');
                                     @if (count($data['pageData']) > 0)
                                     @foreach($data['pageData'] as $pageData)
                                     <tr>
-                                        <td><input type="checkbox"></td>
                                         <td><?=$pageData->name?></td>
                                         <td>
                                             @foreach ($pageData->permissions as $item)

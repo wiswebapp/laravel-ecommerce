@@ -1,5 +1,22 @@
 <?php
 
+function generateExportSection($exportType) {
+    $deleteAllBtn = ($exportType == 'user') ? '<a data-deleteType="'. $exportType .'" class="delete-all-data dropdown-item">Delete Selected</a>' : '';
+
+    return '<div class="export-section" style="display: none">
+                <div class="btn-group" style="float: right">
+                    <button type="button" data-exportType="'. $exportType .'"  class="export-data btn btn-default">Export</button>
+                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu" role="menu" style="">
+                        ' . $deleteAllBtn . '
+                        <a data-exportType="'. $exportType .'" class="export-all-data dropdown-item">Export All Data</a>
+                    </div>
+                </div>
+            </div>';
+}
+
 function generateStatusRow($pageData) {
     $statusTxt = ($pageData->status != "Active") ? "In-active" : $pageData->status;
     $badgeClass = ($pageData->status == "Active") ? 'success' : 'danger';

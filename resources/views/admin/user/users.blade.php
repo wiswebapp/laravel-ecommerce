@@ -52,10 +52,8 @@
                           <a href="{{$routeUrl}}" class="btn btn-default">Reset</a>
                         </div>
                         <div class="col-5">
-                        <div class="export-section" style="display: none">
-                            <a data-exportType="user" class="export-data btn btn-default" style="float: right">Export</a>
+                            {!! generateExportSection('user') !!}
                         </div>
-                      </div>
                     </div>
                 </form>
               </div>
@@ -72,7 +70,9 @@
                                 <th>Mobile</th>
                                 <th>Email</th>
                                 <th>Status</th>
+                                @can('Edit User', 'Delete User')
                                 <th style="width: 15%">Action</th>
+                                @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,6 +87,7 @@
                                             <td>
                                                 {!! generateStatusRow($row) !!}
                                             </td>
+                                            @can('Edit User', 'Delete User')
                                             <td>
                                             @can('Edit User')
                                             {!! generateEditButton($routeEditUrl.'/'.$row->id) !!}
@@ -95,6 +96,7 @@
                                             {!! generateDeleteButton('user', $row->id) !!}
                                             @endcan
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 @else
