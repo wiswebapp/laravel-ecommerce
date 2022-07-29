@@ -39,6 +39,8 @@
 
     @yield('content')
 
+    @yield('bootstrap-modals')
+
     {{-- @include('admin.includes.footer') --}}
 </div>
 <!-- Bootstrap -->

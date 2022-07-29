@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Product;
+use App\ProductOptions;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProduct;
 use Illuminate\Support\Facades\Storage;
@@ -64,6 +65,21 @@ class ProductController extends FilterController
         $newFileName = "";
         $product = Product::find($id);
 
+        if( count($request->all('option_name')) > 0) {
+            ProductOptions::where([
+                'user_id' => $request->user()->id,
+                'product_id' => $product->id,
+            ])->forceDelete();
+            foreach ($request->get('option_name') as $key => $value) {
+                $dataArr = [
+                    'user_id' => $request->user()->id,
+                    'product_id' => $product->id,
+                    'option_name' => $value,
+                    'option_value' => $request->get('option_price')[0]
+                ];
+                ProductOptions::create($dataArr);
+            }
+        }
         if ($request->hasFile('product_image')) {
             $currentImage = $product->product_image;
             $extension = $request->file('product_image')->extension();

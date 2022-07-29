@@ -27,6 +27,7 @@ Route::group(['prefix' => config('app.admin_path_name')], function() use ($route
         Route::get('', 'DashboardController@index')->name('admin.home');
         Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
         Route::get('getDashboardUser', 'DashboardController@getUserData');
+        Route::post('fetchData', 'GeneralController@get_ajax_data');
         // Ajax Calls
         Route::delete('user/removeMultiple', 'UserController@destroy_multiple_user');
         Route::post('product/getCat', 'CategoryController@get_ajax_category')->name('ajax.getCat');

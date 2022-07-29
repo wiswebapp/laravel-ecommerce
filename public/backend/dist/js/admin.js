@@ -1,3 +1,11 @@
+/**
+ *
+ * Note : In this file all the functions are defined first and then after
+ * one document ready start and on all events that should work after document ready
+ * is defined in that
+ * please do not create functions and events anywhere
+ *
+ */
 function getAdminPath() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -132,6 +140,82 @@ function fireAlert(icon, title, note) {
     })
 }
 
+/**
+ * Note :: Product Option Modal JS
+ */
+
+function renderProductOptionHtml(name, price, randomCode = '') {
+    if (! randomCode){
+        var randomCode = Date.now() + Math.floor(Math.random() * 100000);
+    }
+    return `<div class="row option-row-${randomCode}">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input readonly type="text" autocomplete="off" name="option_name[]" value="${name}" class="option-name-${randomCode} form-control">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input readonly type="text" autocomplete="off" name="option_price[]" value="${price}" class="option-value-${randomCode} form-control">
+                    </div>
+                </div>
+                <div class="col-md-1"><span onclick="editOptionForm(${randomCode})" class="btn btn-sm btn-success"><i class="fa fa-pen"></i></span></div>
+                <div class="col-md-1"><span onclick="removeOptionForm(${randomCode})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></span></div>
+            </div>`;
+}
+
+function saveOptionForm() {
+    var name = $(".option-name").val();
+    var price = $(".option-price").val();
+    var renderHtml = "";
+    $(".option-error").hide();
+
+    if(name == "" || price == "" || ! $.isNumeric(price)) {
+        $(".option-error").show();
+    } else {
+        renderHtml = renderProductOptionHtml(name, price);
+        $(".option-input").append(renderHtml);
+        $("#modal-options").modal("hide");
+    }
+}
+
+function updateOptionForm() {
+    var name = $(".option-name").val();
+    var price = $(".option-price").val();
+    var optionboxid = $(".submit-optionmodal").attr("data-optionboxid");
+    $(".option-error").hide();
+
+    if(name == "" || price == "" || ! $.isNumeric(price)) {
+        $(".option-error").show();
+    } else {
+        renderHtml = renderProductOptionHtml(name, price, optionboxid);
+        $(".option-row-" + optionboxid).html(renderHtml);
+        $("#modal-options").modal("hide");
+    }
+}
+
+function editOptionForm(optionId) {
+    $(".option-name").val( $(".option-name-" + optionId).val())
+    $(".option-price").val( $(".option-value-" + optionId).val())
+    showOptionModal("Edit", optionId)
+}
+
+function showOptionModal(mode = "Add", optionBoxId = '') {
+    var optionModal = $("#modal-options");
+    if (mode == "Edit") {
+        $(".submit-optionmodal").attr("onclick", "updateOptionForm()");
+        $(".submit-optionmodal").attr('data-optionBoxId', optionBoxId);
+    } else {
+        $(".submit-optionmodal").attr("onclick", "saveOptionForm()");
+        $(".option-name").val("");
+        $(".option-price").val("");
+    }
+    optionModal.modal("show");
+}
+
+function removeOptionForm(optionId) {
+    $(".option-row-" + optionId).html("");
+}
 $(document).ready(function(){
 
     $(".select-all-cb").click(function(){

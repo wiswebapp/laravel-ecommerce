@@ -38,11 +38,15 @@ class Product extends Model
         'status'
     ];
 
-    public function category(){
-        return $this->belongsTo(Category::class,'category_id','id');
+    public function category() {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function subcategory(){
-        return $this->belongsTo(Category::class,'subcategory_id','id');
+    public function subcategory() {
+        return $this->belongsTo(Category::class, 'subcategory_id', 'id');
+    }
+
+    public function product_options() {
+        return $this->hasMany(ProductOptions::class);
     }
 }

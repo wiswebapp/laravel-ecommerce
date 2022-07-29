@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Traits;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 trait GeneralClass
 {
     public function get_admin_path() {
@@ -11,17 +14,12 @@ trait GeneralClass
         ];
     }
 
-    public function filterData($filterType, $request, $query) {
-        switch ($filterType) {
-            case 'Admin':
-                if (!empty($request->name)) {
-                    $query->where('name', 'LIKE', '%' . $request->name . '%');
-                }
-                if (!empty($request->status)) {
-                    $query->where('status', $request->status);
-                }
-                break;
-        }
-        return $query;
+    public function get_ajax_data(Request $request) {
+        $table = $request->input('tableName');
+        $tableId = $request->input('tableId');
+
+        $data = DB::table($table)->where(['id' => $tableId])->get();
+
+        return $data;
     }
 }
