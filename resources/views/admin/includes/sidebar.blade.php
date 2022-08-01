@@ -91,6 +91,15 @@
                 </li>
                 @endcan
 
+                @can('View Store')
+                <li class="nav-item">
+                    <a href="{{route('admin.store')}}" class="nav-link">
+                    <i class="nav-icon fas fa-store"></i>
+                    <p>Stores</p>
+                    </a>
+                </li>
+                @endcan
+
                 @can('View Pages')
                 <li class="nav-item">
                     <a href="{{route('admin.pages')}}" class="nav-link">

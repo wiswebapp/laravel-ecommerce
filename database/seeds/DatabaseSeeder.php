@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             StateTableSeeder::class,
             CitiesTableSeeder::class,
             PageTableSeeder::class,
+            StoreTableSeeder::class,
         ]);
 
     }

@@ -95,6 +95,25 @@ class ExportController extends GeneralController
                 });
                 break;
 
+            case 'store':
+                $fields = ['owner','name','email','address','location','country','state','zipcode','status','created_at'];
+                $requestHeading =  ['Owner Name', 'Store Name', 'Email', "Address", "Location", "Country", "State","Zip","Status", "Registered On"];
+
+                if($requestData['exportAll'] == "Yes") {
+                    $query = $filterClass->filterStoreData($request, true);
+                } else {
+                    $query = $filterClass->filterStoreData($request);
+                }
+
+                $query->addSelect($fields);
+                $requestData = $query->get();
+                $requestData->map(function($mapData) {
+                    $mapData->country = $mapData->getCountry->name;
+                    $mapData->state = $mapData->getState->name;
+                    $mapData->created_at = $mapData->created_at->format('d-m-Y');
+                });
+                break;
+
             default:
                 abort(404);
                 break;

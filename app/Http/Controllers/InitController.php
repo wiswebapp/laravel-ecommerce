@@ -13,7 +13,17 @@ class InitController extends Controller
     {
         //Permission Creation
         if (DB::table('permissions')->get()->count() == 0 ) {
-            $modules = ['Role','Admin','User','Category','SubCategory','Product','Pages'];
+            $modules = [
+                'Role',
+                'Admin',
+                'User',
+                'Category',
+                'SubCategory',
+                'Product',
+                'Pages',
+                'Store',
+            ];
+
             foreach ($modules as $moduleName) {
 
                 Permission::create([
