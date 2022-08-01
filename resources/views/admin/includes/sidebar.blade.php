@@ -11,7 +11,7 @@
 
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a class="d-block"><b>Phone :</b> +(91) {{Auth::user()->phone}}</a>
+                <a class="d-block"><b>Role :</b> {{Auth::user()->getRoleNames()[0]}}</a>
                 <a class="d-block"><b>Status :</b> <i style="color:#19f319;font-size:12px;" class="fa fa-circle"></i> Online</a>
             </div>
         </div>

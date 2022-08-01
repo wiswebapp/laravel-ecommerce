@@ -173,6 +173,7 @@ function saveOptionForm() {
     if(name == "" || price == "" || ! $.isNumeric(price)) {
         $(".option-error").show();
     } else {
+        $(".no-option-text").hide();
         renderHtml = renderProductOptionHtml(name, price);
         $(".option-input").append(renderHtml);
         $("#modal-options").modal("hide");

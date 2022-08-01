@@ -2,12 +2,34 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Admin;
 use App\User;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
 
 class FilterController extends GeneralController {
+
+    public function filterAdminData(Request $request, $getAllData = false) {
+        $query = Admin::orderBy('id', 'desc');
+        //Filter Only if get all data is not selected
+        if (! $getAllData) {
+            $selectedIds = $request->input('selectedIds');
+            if (! empty($request->input('selectedIds'))) {
+                $query->whereIn('id', explode(',', $selectedIds));
+            }
+
+            if (! empty($request->input('name'))) {
+                $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
+            }
+
+            if (! empty($request->input('status'))) {
+                $query->where('status', $request->input('status'));
+            }
+        }
+
+        return $query;
+    }
 
     public function filterUserData(Request $request, $getAllData = false) {
         $query = User::whereNull('deleted_at')->orderBy('id', 'desc');

@@ -25,20 +25,22 @@ class CreateAdminRequest extends FormRequest
     public function rules()
     {
         $method = $this->method();
-        
+
         $rules = [
             'name' => 'required|max:255|regex:/^[\pL\s\-]+$/u',
             'status' => 'required',
+            'phone' => 'required|numeric|digits_between:10,12'
         ];
-        
-        if($method == "POST"){
+
+        if($method == "POST") {
             $rules += [
                 'email' => ['required', Rule::unique('admin', 'email'), 'email:rfc'],
                 'password' => 'required|min:6',
             ];
-        }else{
+        } else {
             $rules += [
                 'email' => ['required', Rule::unique('admin', 'email')->ignore($this->route('id')), 'email:rfc'],
+                'password' => 'nullable|min:6',
             ];
         }
 

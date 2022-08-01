@@ -5,20 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Admin;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Controllers\Traits\GeneralClass;
 
-class AdminController extends Controller
+class AdminController extends FilterController
 {
     use GeneralClass;
 
     public function admin(Request $request)
     {
         abort_unless($this->checkPermission('View Admin'), 403);
-        $query = $this->filterData('Admin',$request, Admin::orderBy('id', 'desc'));
+        $query = $this->filterAdminData($request);
         $data['pageData'] = $query->paginate(10);
         $data['pageTitle'] = "Admin Users";
+
         return view('admin.user.admin', compact('data'));
     }
 
@@ -28,6 +29,7 @@ class AdminController extends Controller
         $data['action'] = "Add";
         $data['pageTitle'] = "Add Pages";
         $data['roleList'] = Role::all();
+
         return view('admin.user.admin_action', compact('data'));
     }
 
@@ -38,6 +40,7 @@ class AdminController extends Controller
         $ROLE_OF_ADMIN = $input['role'];
         unset($input['role']);
         Admin::Create($input)->assignRole($ROLE_OF_ADMIN);
+
         return redirect()->route('admin.admin')->with('success', 'Data Added Successfuly');
     }
 
@@ -49,6 +52,7 @@ class AdminController extends Controller
         $data['pageTitle'] = "Edit Admin";
         $data['RollName'] = $data['pageData']->getRoleNames()->toArray()[0];
         $data['roleList'] = Role::all();
+
         return view('admin.user.admin_action',compact('data'));
     }
 
@@ -56,15 +60,13 @@ class AdminController extends Controller
     {
         abort_unless($this->checkPermission('Edit Admin'), 403);
         $adminUser = Admin::find($id);
-        $input = $request->all();
-        $roleOfAdmin = Role::where('name',$input['role'])->get();
+        $input = $request->input();
+        $roleOfAdmin = Role::where('name', $input['role'])->get();
         unset($input['role']);
-        if ($input['password'] == null || empty($input['password'])) {
-            unset($input['password']);
-        }
-
+        $input['password'] = (! empty($input['password'])) ? Hash::make($input['password']) : $adminUser->password;
         $adminUser->update($input);
         $adminUser->assignRole($roleOfAdmin);
+
         return redirect()->route('admin.admin')->with('success', 'Data Updated Successfuly');
     }
 

@@ -31,12 +31,19 @@
            @include('includes.alert_msg')
             <div class="card">
             @if ($action == "Edit")
-                {{Form::open(['action' => ['admin\AdminController@update_admin',$pageData->id],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
+                {{Form::open([
+                    'action' => ['admin\AdminController@update_admin',$pageData->id],
+                    'method'=>'PUT',
+                    'enctype'=>'multipart/form-data'
+                ])}}
             @else
-                {{Form::open(['action' => ['admin\AdminController@store_admin'],'method'=>'post','enctype'=>'multipart/form-data'])}}
+                {{Form::open([
+                    'action' => ['admin\AdminController@store_admin'],
+                    'method'=>'post',
+                    'enctype'=>'multipart/form-data'
+                ])}}
             @endif
               <div class="card-body">
-
                     <div class="col-md-8">
                       <div class="form-group">
                           <label>Admin type</label>

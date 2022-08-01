@@ -62,7 +62,6 @@ class ProductController extends FilterController
 
     public function update_product($id, CreateProduct $request) {
         abort_unless($this->checkPermission('Edit Product'), 403);
-        $newFileName = "";
         $product = Product::find($id);
 
         if( count($request->all('option_name')) > 0) {
@@ -75,7 +74,7 @@ class ProductController extends FilterController
                     'user_id' => $request->user()->id,
                     'product_id' => $product->id,
                     'option_name' => $value,
-                    'option_value' => $request->get('option_price')[0]
+                    'option_value' => $request->get('option_price')[$key]
                 ];
                 ProductOptions::create($dataArr);
             }

@@ -105,7 +105,7 @@
                                             <div class="col-md-1"><span onclick="removeOptionForm({{$optionData->id}})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></span></div>
                                         </div>
                                         @empty
-                                        <pre>No Options Added</pre>
+                                        <pre class="no-option-text text-danger">No Options Added</pre>
                                         @endforelse
                                     </div>
                                 </div>

@@ -34,10 +34,8 @@ class Admin extends Authenticatable
     public static function boot()
     {
         parent::boot();
+
         self::creating(function ($model) {
-            $model->password = Hash::make($model->password);;
-        });
-        self::updating(function ($model) {
             $model->password = Hash::make($model->password);;
         });
     }
