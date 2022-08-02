@@ -4,9 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Traits\GeneralClass;
+use App\Events\UserRegister;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Controllers\Traits\GeneralClass;
 
 class UserController extends FilterController
 {
@@ -37,6 +38,10 @@ class UserController extends FilterController
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user->fill($input)->save();
+        if ($user->status == "Active") {
+            //For Send an email to user
+            UserRegister::dispatch($user);
+        }
 
         return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
     }

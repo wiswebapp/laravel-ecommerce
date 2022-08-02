@@ -32,14 +32,14 @@ class UserStoreRequest extends FormRequest
             'email' => [
                 'required', Rule::unique('users', 'email')->ignore($id), 'email:rfc'
             ],
-            'phone' => 'required|digits:10|integer',
+            'phone' => 'required|digits_between:10,15|integer',
             'status' => 'required',
             'country' => 'required',
             'state' => 'required',
         ];
 
         if(empty($id)){
-            $validatArr['password'] = 'required|alpha_dash';
+            $validatArr['password'] = 'required|min:5|max:12';
         }
 
         return $validatArr;

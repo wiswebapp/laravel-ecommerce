@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Providers;
+namespace App\Listeners;
 
-use App\Providers\UserRegisterEvent;
+use App\Events\UserRegister;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class UserRegisterListen
+class UserRegisterListner
 {
     /**
      * Create the event listener.
@@ -21,11 +21,12 @@ class UserRegisterListen
     /**
      * Handle the event.
      *
-     * @param  UserRegisterEvent  $event
+     * @param  \App\Events\UserRegister  $event
      * @return void
      */
-    public function handle(UserRegisterEvent $event)
+    public function handle(UserRegister $event)
     {
-        //
+        $userData = $event->user;
+        \Mail::to($userData->email)->send(new \App\Mail\UserRegisterMail($userData));
     }
 }
