@@ -76,7 +76,7 @@ class InitController extends Controller
             $user->assignRole($role);
         }
 
-        return redirect('/?msg=Admin_panel_intialized_successfully');
+        return true;
     }
 
 }

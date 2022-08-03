@@ -16,16 +16,16 @@ This all things is pre-built with permissions and admin roles. You just have to 
 ## Steps to Run the project
 - Clone the project from github
 - Copy Env File and fill appropriate details
-- Run command `composer install`
-- Run command `php artisan migrate`
-- Run command `php artisan db:seed`
-- Run command `php artisan key:generate`
-- Run command `php artisan serve`
-- Hit the Url `http://127.0.0.1:8000/create-permission`
-- This will create basic permissions for application admin
-- Now Hit the url `http://127.0.0.1:8000/webadmin/login` for login to admin with username password (123456). Grab the username from database
-- If Admin login credentials not works just add following password in database manually
-    `$2y$10$xSugoyKv765TY8DsERJ2/.mPIOwLNdM5Iw1n3x1XNVymBlHNG4cX6` this means `123456`
+- Run Following commands for basic setup
+- `composer install`
+- `php artisan migrate`
+- `php artisan db:seed`
+- `php artisan key:generate`
+- `php artisan storage:link`
+- `php artisan initialize:admin`
+    - This will create basic permissions for application admin
+- `php artisan serve`
+- Now Hit the url http://127.0.0.1:8000/webadmin/login for login to admin with username password (123456). Grab the username from database
 - **All Set. Done :+1: !**
 
 
@@ -34,19 +34,23 @@ This all things is pre-built with permissions and admin roles. You just have to 
 - This is just a skeleton/example how you can implement admin panel with [spatie larvel permissions.](https://spatie.be/docs/laravel-permission/v5/introduction)
 - If you discover a security vulnerability within Laravel, please send an e-mail to Tarang Panchal via [tarang.webinfosolutions@gmail.com](mailto:tarang.webinfosolutions@gmail.com). All security vulnerabilities will be promptly addressed.
 
-## Contribution
+### Contribution
 
 I love to welcome your contributions if you know Laravel / Vue.js.
+
+Special thanks to [@monish](https://github.com/monish-khatri) for creating readme file
+
+
 ### Steps to Run the project
+
 - Clone the project from github
 - Copy Env File and fill appropriate details
 - Run command `php artisan migrate`
 - Run command `php artisan db:seed`
-- Start the artisan server
-- Than go to http://127.0.0.1:8000/create-permission to create appropriate permissions for application admin
-- If Admin login credentials not works just add following password in database manually
-    `$2y$10$xSugoyKv765TY8DsERJ2/.mPIOwLNdM5Iw1n3x1XNVymBlHNG4cX6`
-- And than login with admin email and password `123456`
+- Run command `php artisan initialize:admin`
+- Run command `php artisan storage:link`
+- this will create appropriate permissions for application admin
+- Run command `php artisan serve`
 - All Set. Done +1 !
 
 ## Security Vulnerabilities
