@@ -3,7 +3,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProductFactory extends Factory
+class StoreFactory extends Factory
 {
 
     public function definition(){
@@ -12,8 +12,6 @@ class ProductFactory extends Factory
             'owner' => $this->faker->firstName,
             'name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
-            'phonecode' => now(),
-            'phone' => $this->faker->PhoneNumber,
             'address' => $this->faker->streetAddress,
             'location' => $this->faker->streetAddress,
             'country' => 101,
