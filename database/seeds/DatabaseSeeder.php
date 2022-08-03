@@ -1,5 +1,14 @@
 <?php
 
+use Database\Seeders\AdminTableSeeder;
+use Database\Seeders\CategoryTableSeeder;
+use Database\Seeders\CitiesTableSeeder;
+use Database\Seeders\CountriesTableSeeder;
+use Database\Seeders\PageTableSeeder;
+use Database\Seeders\ProductTableSeeder;
+use Database\Seeders\StateTableSeeder;
+use Database\Seeders\StoreTableSeeder;
+use Database\Seeders\UserTableSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
