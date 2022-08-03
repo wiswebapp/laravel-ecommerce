@@ -5,33 +5,32 @@ namespace App\Http\Controllers\admin;
 use App\Store;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStore;
-use App\Http\Requests\UserStoreRequest;
 use Illuminate\Support\Facades\Hash;
 
 class StoreController extends FilterController
 {
     public function store(Request $request) {
         abort_unless($this->checkPermission('View Store'), 403);
-
         $query = $this->filterStoreData($request);
-        $data['pageData'] = $query->paginate(10);
-        $data['pageTitle'] = "Stores";
+        $data = $this->renderResponse('Store', [
+            'pageData' => $query->paginate(10)
+        ]);
 
-        return view('admin.store.index')->with('data',$data);
+        return view('admin.store.index')->with('data', $data);
     }
 
     public function create_store() {
         abort_unless($this->checkPermission('Create Store'), 403);
-        $data['action'] = "Add";
-        $data['pageTitle'] = "Add Store";
-        $data['country'] = $this->getCountry();
+        $data = $this->renderResponse('Add Store', [
+            'country' => $this->getCountry(),
+            'action' => 'Add',
+        ]);
 
-        return view('admin.store.store_action')->with('data',$data);
+        return view('admin.store.store_action')->with('data', $data);
     }
 
     public function store_store(CreateStore $request) {
         abort_unless($this->checkPermission('Create Store'), 403);
-        $storeDetails = new Store();
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         if ($request->hasFile('image')) {
@@ -41,17 +40,21 @@ class StoreController extends FilterController
             $request->file('image')->storeAs($uploadPath, $newFileName);
             $input['image'] = $newFileName;
         }
-        $storeDetails->fill($input)->save();
-
-        return redirect()->route('admin.store')->with('success','Data Updated Successfuly');
+        $storeDetails = Store::create($input);
+        if ($storeDetails) {
+            return redirect()->route('admin.store')->with('success','Data Updated Successfuly');
+        } else {
+            return redirect()->route('admin.store')->with('danger','Whoops..! Some error occured !');
+        }
     }
 
     public function edit_store($id) {
         abort_unless($this->checkPermission('Edit Store'), 403);
-        $data['action'] = "Edit";
-        $data['pageData'] = Store::find($id);
-        $data['pageTitle'] = "Edit Store";
-        $data['country'] = $this->getCountry();
+        $data = $this->renderResponse('Edit Store', [
+            'action' => 'Edit',
+            'pageData' => Store::find($id),
+            'country' => $this->getCountry(),
+        ]);
 
         return view('admin.store.store_action')->with('data',$data);
     }
@@ -79,7 +82,7 @@ class StoreController extends FilterController
         } else {
             $input['password'] = Hash::make($input['password']);
         }
-        $store->fill($input)->save();
+        $store->update($input);
 
         return redirect()->route('admin.store')->with('success','Data Updated Successfuly');
     }

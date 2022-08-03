@@ -7,6 +7,18 @@ use Illuminate\Support\Facades\DB;
 
 trait GeneralClass
 {
+    public function renderResponse($pageTitle, $otherParamertes = []) {
+        $responseData = [];
+        $responseData['pageTitle'] = $pageTitle;
+        if (! empty($otherParamertes)) {
+            foreach ($otherParamertes as $key => $value) {
+                $responseData[$key] = $value;
+            }
+        }
+
+        return $responseData;
+    }
+
     public function get_admin_path() {
 
         return [

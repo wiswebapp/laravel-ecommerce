@@ -48,6 +48,7 @@
                             <div class="form-group">
                                 <label>Sub Category</label>
                                 <select name="subcategory_id" class="form-control select2" id="subCategory" required>
+                                    <option value="">Please Select category</option>
                                 </select>
                             </div>
                             <div class="form-group">
