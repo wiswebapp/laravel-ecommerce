@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\admin;
 
-use App\Product;
-use App\ProductOptions;
+use App\Models\Product;
+use App\Models\ProductOptions;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProduct;
 use Illuminate\Support\Facades\Storage;

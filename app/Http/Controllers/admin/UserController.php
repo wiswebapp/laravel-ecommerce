@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Events\UserRegister;
 use Illuminate\Support\Facades\Hash;

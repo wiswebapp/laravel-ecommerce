@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\admin;
 
-use App\Pages;
+use App\Models\Pages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePages;

@@ -12,6 +12,6 @@ class StoreTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Store::factory()->count(100)->create();
+        \App\Models\Store::factory()->count(100)->create();
     }
 }

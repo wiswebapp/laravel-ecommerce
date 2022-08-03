@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Admin;
-use App\User;
-use App\Product;
-use App\Category;
-use App\Store;
+use App\Models\Admin;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Store;
 use Illuminate\Http\Request;
 
 class FilterController extends GeneralController {
