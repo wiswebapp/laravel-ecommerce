@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Store;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStore;
 use Illuminate\Support\Facades\Hash;

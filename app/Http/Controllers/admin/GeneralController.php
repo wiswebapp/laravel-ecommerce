@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\State;
-use App\Country;
+use App\Models\State;
+use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GeneralClass;
 

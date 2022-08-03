@@ -3,7 +3,7 @@
 namespace App\macro;
 
 use DB;
-use App\Category;
+use App\Models\Category;
 
 class QueryFunctionMacros{
 
