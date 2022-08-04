@@ -29,6 +29,7 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'subcategory_id',
+        'store_id',
         'product_name',
         'product_short_description',
         'product_long_description',
@@ -37,6 +38,10 @@ class Product extends Model
         'is_available',
         'status'
     ];
+
+    public function store() {
+        return $this->belongsTo(Store::class, 'store_id', 'id');
+    }
 
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');

@@ -15,18 +15,18 @@ class ProductController extends FilterController
         $query = $this->filterProductData($request);
         $data = $this->renderResponse('Product', [
             'pageData' => $query->paginate(10),
+            'storeData' => $this->filterStoreData($request)->get(),
         ]);
 
         return view('admin.product.index')->with('data', $data);
     }
 
-    public function create_product() {
+    public function create_product(Request $request) {
         abort_unless($this->checkPermission('Create Product'), 403);
         $data = $this->renderResponse('Add Product', [
             'action' => 'Add',
-            'pageData' => [
-                'category' => Builder::getCategoryData()
-            ],
+            'category' => Builder::getCategoryData(),
+            'storeData' => $this->filterStoreData($request)->get(),
         ]);
 
         return view('admin.product.product_action')->with('data', $data);
@@ -56,11 +56,12 @@ class ProductController extends FilterController
         }
     }
 
-    public function edit_product($id) {
+    public function edit_product(Request $request, $id) {
         abort_unless($this->checkPermission('Edit Product'), 403);
         $data = $this->renderResponse('Edit Product', [
             'action' => 'Edit',
             'pageData' => Product::find($id),
+            'storeData' => $this->filterStoreData($request)->get(),
         ]);
 
         return view('admin.product.product_action')->with('data',$data);
@@ -70,15 +71,15 @@ class ProductController extends FilterController
         abort_unless($this->checkPermission('Edit Product'), 403);
         $product = Product::find($id);
 
-        if( count($request->all('option_name')) > 0) {
+        if( count($request->get('option_name')) > 0) {
             ProductOptions::where([
-                'user_id' => $request->user()->id,
                 'product_id' => $product->id,
             ])->forceDelete();
             foreach ($request->get('option_name') as $key => $value) {
                 $dataArr = [
                     'user_id' => $request->user()->id,
                     'product_id' => $product->id,
+                    'store_id' => $product->store->id,
                     'option_name' => $value,
                     'option_value' => $request->get('option_price')[$key]
                 ];

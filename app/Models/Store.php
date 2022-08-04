@@ -30,4 +30,9 @@ class Store extends Model
     {
         return $this->belongsTo(State::class, 'state', 'id');
     }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

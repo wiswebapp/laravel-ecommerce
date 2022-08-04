@@ -41,6 +41,14 @@
                         <input type="text" name="name" class="form-control" placeholder="Filter by Name" value="{{isset($_GET['name']) ? $_GET['name'] : ""}}">
                         </div>
                         <div class="col-2">
+                            <select name="store" class="form-control select2">
+                                <option value="">Filter By Store</option>
+                                @foreach ($data['storeData'] as $item)
+                                    <option <?=((@$_GET['store'] == $item->id) ? "selected" : "")?> value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-2">
                             <select name="status" class="form-control">
                                 <option value="">Filter By Status</option>
                                 <option <?=(@$_GET['status'] == "Active") ? "selected" : ""?> value="Active">Active</option>
@@ -51,7 +59,7 @@
                           <button type="submit" class="btn btn-default">Filter</button>
                           <a href="{{$routeUrl}}" class="btn btn-default">Reset</a>
                         </div>
-                        <div class="col-5">
+                        <div class="col-3">
                             {!! generateExportSection('product') !!}
                         </div>
                     </div>
@@ -64,6 +72,7 @@
                     <tr>
                       <th><input type="checkbox" class="select-all-cb"></th>
                       <th>Image</th>
+                      <th>Store Name</th>
                       <th>Category</th>
                       <th>Product name</th>
                       <th>Product Price</th>
@@ -79,10 +88,13 @@
                             <tr>
                                 <td><input type="checkbox" data-id="{{$pageData->id}}" class="data-cb"></td>
                                 <td><img style="height:100px;width:100px;" class="img img-thumbnail" src="<?=(! empty($pageData->product_image) ? '/storage/product/'.$pageData->product_image : "https://dummyimage.com/100x100/000/fff&text=No+Image")?>" alt="No Image Availble"></td>
+                                <td><?=$pageData->store->name?></td>
                                 <td><?=$pageData->category->category_name?></td>
                                 <td><?=$pageData->product_name?></td>
                                 <td><?=formatNum($pageData->price)?></td>
-                                <td><?=$pageData->is_available?></td>
+                                <td>
+                                    {!! generateYesNo($pageData->is_available) !!}
+                                </td>
                                 <td><?=$pageData->stock_count?></td>
                                 <td>
                                     {!! generateStatusRow($pageData) !!}

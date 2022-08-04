@@ -69,6 +69,7 @@
                                 <th>Store Name</th>
                                 <th>Store Owner</th>
                                 <th>Email</th>
+                                <th>Product</th>
                                 <th>Status</th>
                                 @can('Edit Store', 'Delete Store')
                                 <th style="width: 15%">Action</th>
@@ -84,6 +85,9 @@
                                             <td><?=$row->name?></td>
                                             <td><?=$row->owner?></td>
                                             <td><?=$row->email?></td>
+                                            <td>
+                                                <a href="/<?=config('app.admin_path_name')?>/product?store=<?=$row->id?>" target="_blank" type="button" class="btn btn-sm btn-info">{{count($row->getProducts)}} Products</a>
+                                            </td>
                                             <td>
                                                 {!! generateStatusRow($row) !!}
                                             </td>

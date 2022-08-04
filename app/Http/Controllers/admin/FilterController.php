@@ -105,6 +105,10 @@ class FilterController extends GeneralController {
                 $query->whereIn('id', explode(',', $selectedIds));
             }
 
+            if(!empty($request->input('store'))){
+                $query->where('store_id', $request->input('store'));
+            }
+
             if(!empty($request->input('name'))){
                 $query->where('product_name','LIKE','%'. $request->input('name').'%');
             }

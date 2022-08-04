@@ -14,6 +14,7 @@ class ProductOptions extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'store_id',
         'option_name',
         'option_value',
     ];

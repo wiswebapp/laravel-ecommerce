@@ -78,8 +78,8 @@ class ExportController extends GeneralController
                 break;
 
             case 'product':
-                $fields = ['category_id', 'subcategory_id', 'product_name', 'price', 'stock_count' ,'is_available', 'status', 'created_at'];
-                $requestHeading =  ['Category', 'SubCategory', 'Product Name', 'Price', 'Stock Count' ,'Is Available', 'Status', 'Added On'];
+                $fields = ['category_id', 'subcategory_id', 'store_id', 'product_name', 'price', 'stock_count' ,'is_available', 'status', 'created_at'];
+                $requestHeading =  ['Category', 'SubCategory', 'Store Name','Product Name', 'Price', 'Stock Count' ,'Is Available', 'Status', 'Added On'];
 
                 if($requestData['exportAll'] == "Yes") {
                     $query = $filterClass->filterProductData($request, true);
@@ -92,6 +92,7 @@ class ExportController extends GeneralController
                 $requestData->map(function($mapData) {
                     $mapData->category_id = $mapData->category->category_name;
                     $mapData->subcategory_id = $mapData->subcategory->category_name;
+                    $mapData->store_id = $mapData->store->name;
                 });
                 break;
 
