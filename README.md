@@ -8,7 +8,7 @@ This all things is pre-built with permissions and admin roles. You just have to 
 ## Prerequisites
 
 ##### What things you need to install this project and how to setup the project on local
-1. **PHP [![Version](https://shields.io/badge/version-v7.3-green)](https://www.php.net/releases/7_3_0.php)** 
+1. **PHP [![Version](https://shields.io/badge/version-v7.3-green)](https://www.php.net/releases/7_3_0.php)**
 2. **Laravel [![Version](https://shields.io/badge/version-v8.0-red)](https://laravel.com/docs/8.x)**
 3. **Composer [![Version](https://shields.io/badge/version-v2.0-blue)](https://getcomposer.org/)**
 3. **MySql [![Version](https://shields.io/badge/version-v8.0-orange)](https://www.phpmyadmin.net/)**
@@ -29,7 +29,7 @@ This all things is pre-built with permissions and admin roles. You just have to 
 - **All Set. Done :+1: !**
 
 
-## Notes
+### Notes
 - This is project is under development currently so you might not want to use this app in production directly.
 - This is just a skeleton/example how you can implement admin panel with [spatie larvel permissions.](https://spatie.be/docs/laravel-permission/v5/introduction)
 - If you discover a security vulnerability within Laravel, please send an e-mail to Tarang Panchal via [tarang.webinfosolutions@gmail.com](mailto:tarang.webinfosolutions@gmail.com). All security vulnerabilities will be promptly addressed.
@@ -40,18 +40,6 @@ I love to welcome your contributions if you know Laravel / Vue.js.
 
 Special thanks to [@monish](https://github.com/monish-khatri) for creating readme file
 
-
-### Steps to Run the project
-
-- Clone the project from github
-- Copy Env File and fill appropriate details
-- Run command `php artisan migrate`
-- Run command `php artisan db:seed`
-- Run command `php artisan initialize:admin`
-- Run command `php artisan storage:link`
-- this will create appropriate permissions for application admin
-- Run command `php artisan serve`
-- All Set. Done +1 !
 
 ## Security Vulnerabilities
 
