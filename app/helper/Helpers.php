@@ -17,6 +17,12 @@ function generateExportSection($exportType) {
             </div>';
 }
 
+function generateYesNo($status) {
+    $statusTxt = ($status != "Yes") ? "Not Available" : "Available";
+    $badgeClass = ($status == "Yes") ? 'success' : 'danger';
+    return '<span class="badge badge-'. $badgeClass .'">'. $statusTxt .'</span>';
+}
+
 function generateStatusRow($pageData) {
     $statusTxt = ($pageData->status != "Active") ? "In-active" : $pageData->status;
     $badgeClass = ($pageData->status == "Active") ? 'success' : 'danger';

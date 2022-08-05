@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -11,6 +12,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\User::factory()->count(100)->create();
+        \App\Models\User::factory()->count(100)->create();
     }
 }

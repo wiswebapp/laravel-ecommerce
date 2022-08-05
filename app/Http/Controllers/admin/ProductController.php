@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\admin;
 
-use App\Product;
-use App\ProductOptions;
+use App\Models\Product;
+use App\Models\ProductOptions;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProduct;
 use Illuminate\Support\Facades\Storage;
@@ -13,24 +13,27 @@ class ProductController extends FilterController
     public function product(Request $request) {
         abort_unless($this->checkPermission('View Product'), 403);
         $query = $this->filterProductData($request);
-        $data['pageData'] = $query->paginate(10);
-        $data['pageTitle'] = "Product";
+        $data = $this->renderResponse('Product', [
+            'pageData' => $query->paginate(10),
+            'storeData' => $this->filterStoreData($request)->get(),
+        ]);
 
-        return view('admin.product.index')->with('data',$data);
+        return view('admin.product.index')->with('data', $data);
     }
 
-    public function create_product() {
+    public function create_product(Request $request) {
         abort_unless($this->checkPermission('Create Product'), 403);
-        $data['action'] = "Add";
-        $data['pageTitle'] = "Add Product";
-        $data['pageData']['category'] = Builder::getCategoryData();
+        $data = $this->renderResponse('Add Product', [
+            'action' => 'Add',
+            'category' => Builder::getCategoryData(),
+            'storeData' => $this->filterStoreData($request)->get(),
+        ]);
 
-        return view('admin.product.product_action')->with('data',$data);
+        return view('admin.product.product_action')->with('data', $data);
     }
 
     public function store_product(CreateProduct $request) {
         abort_unless($this->checkPermission('Create Product'), 403);
-        $newFileName = "";
 
         if ($request->hasFile('product_image')) {
             $extension = $request->file('product_image')->extension();
@@ -41,21 +44,25 @@ class ProductController extends FilterController
             }
             $request->file('product_image')->storeAs($uploadPath, $newFileName);
         }
-        $product = new Product();
         $input = $request->all();
         unset($input['_token']);
         $input['product_image'] = $newFileName;
-        $product::insert($input);
+        $product = Product::create($input);
 
-        return redirect()->route('admin.product')->with('success','Data Updated Successfuly');
+        if ($product) {
+            return redirect()->route('admin.product')->with('success','Data Updated Successfuly');
+        } else {
+            return redirect()->route('admin.product')->with('danger','Whoops..! Some error occured !');
+        }
     }
 
-    public function edit_product($id) {
+    public function edit_product(Request $request, $id) {
         abort_unless($this->checkPermission('Edit Product'), 403);
-        $data['action'] = "Edit";
-        $data['pageData'] = Product::find($id);
-        $data['pageTitle'] = "Edit Product";
-        $data['pageData']['category'] = Builder::getCategoryData();
+        $data = $this->renderResponse('Edit Product', [
+            'action' => 'Edit',
+            'pageData' => Product::find($id),
+            'storeData' => $this->filterStoreData($request)->get(),
+        ]);
 
         return view('admin.product.product_action')->with('data',$data);
     }
@@ -64,15 +71,15 @@ class ProductController extends FilterController
         abort_unless($this->checkPermission('Edit Product'), 403);
         $product = Product::find($id);
 
-        if( count($request->all('option_name')) > 0) {
+        if( count($request->get('option_name')) > 0) {
             ProductOptions::where([
-                'user_id' => $request->user()->id,
                 'product_id' => $product->id,
             ])->forceDelete();
             foreach ($request->get('option_name') as $key => $value) {
                 $dataArr = [
                     'user_id' => $request->user()->id,
                     'product_id' => $product->id,
+                    'store_id' => $product->store->id,
                     'option_name' => $value,
                     'option_value' => $request->get('option_price')[$key]
                 ];
@@ -91,7 +98,8 @@ class ProductController extends FilterController
             $request->file('product_image')->storeAs($uploadPath, $newFileName);
             $product->product_image = $newFileName;
         }
-        $update = $product->fill($request->all())->save();
+        $update = $product->update($request->all());
+
         if($update):
             return redirect()->route('admin.product')->with('success','Data Updated Successfuly');
         else:
@@ -102,7 +110,10 @@ class ProductController extends FilterController
     public function destroy_product( Request $request) {
         abort_unless($this->checkPermission('Delete Product'), 403);
         $product = Product::find($request->dataId);
-        $product->delete();
-        echo 1;
+        if ($product->delete()) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCategory;
 use App\Http\Requests\CreateSubCategory;
@@ -15,14 +15,14 @@ class CategoryController extends FilterController
         abort_unless($this->checkPermission('View Category'), 403);
         $query = $this->filterCategoryData($request);
         $data['pageData'] = $query->paginate(10);
-        $data['pageTitle'] = "Category";
+        $data['pageTitle'] = "Product Category";
 
         return view('admin.category.category')->with('data',$data);
     }
 
     public function create_category(){
         abort_unless($this->checkPermission('Create Category'), 403);
-        $data['pageTitle'] = "Add Category";
+        $data['pageTitle'] = "Add Product Category";
         $data['action'] = "Add";
 
         return view('admin.category.category_action')->with('data',$data);
@@ -40,7 +40,7 @@ class CategoryController extends FilterController
 
     public function edit_category($id){
         abort_unless($this->checkPermission('Edit Category'), 403);
-        $data['pageTitle'] = "Edit Category";
+        $data['pageTitle'] = "Edit Product Category";
         $data['action'] = "Edit";
         $data['pageData'] = Category::find($id);
 
@@ -79,14 +79,14 @@ class CategoryController extends FilterController
         abort_unless($this->checkPermission('View SubCategory'), 403);
         $query = $this->filterSubCategoryData($request);
         $data['pageData'] = $query->paginate(10);
-        $data['pageTitle'] = "Sub Category";
+        $data['pageTitle'] = "Sub Product Category";
 
         return view('admin.category.subcategory')->with('data',$data);
     }
 
     public function create_subcategory() {
         abort_unless($this->checkPermission('Create SubCategory'), 403);
-        $data['pageTitle'] = "Add SubCategory";
+        $data['pageTitle'] = "Add Product SubCategory";
         $data['action'] = "Add";
         $data['pageData']['category'] = $this->getCatListing();
 
@@ -105,7 +105,7 @@ class CategoryController extends FilterController
     public function edit_subcategory($id) {
         abort_unless($this->checkPermission('Edit SubCategory'), 403);
         $dataCategory = Category::find($id);
-        $data['pageTitle'] = "Edit SubCategory";
+        $data['pageTitle'] = "Edit Product SubCategory";
         $data['action'] = "Edit";
         $data['pageData'] = $dataCategory;
         $data['pageData']['category'] = $this->getCatListing();

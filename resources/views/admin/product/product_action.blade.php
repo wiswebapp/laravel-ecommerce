@@ -37,10 +37,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Store</label>
+                                <select name="store_id" class="form-control select2" required>
+                                    <option value="">Select Store</option>
+                                    @foreach ($data['storeData'] as $item)
+                                        <option <?=(($pageData->store_id == $item->id) ? "selected" : "")?> value="{{$item->id}}">{{$item->name}} ({{$item->owner}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Category</label>
                                 <select name="category_id" class="form-control select2" onchange="setSubCategory(this.value)" id="category" required>
                                     <option value="">Select Category</option>
-                                    @foreach ($data['pageData']['category'] as $item)
+                                    @foreach ($data['category'] as $item)
                                         <option <?=(($pageData->parent_id == $item->id) ? "selected" : "")?> value="{{$item->id}}">{{$item->category_name}}</option>
                                     @endforeach
                                 </select>
@@ -48,6 +57,7 @@
                             <div class="form-group">
                                 <label>Sub Category</label>
                                 <select name="subcategory_id" class="form-control select2" id="subCategory" required>
+                                    <option value="">Please Select category</option>
                                 </select>
                             </div>
                             <div class="form-group">

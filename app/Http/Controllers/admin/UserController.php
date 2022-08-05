@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Traits\GeneralClass;
+use App\Events\UserRegister;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Controllers\Traits\GeneralClass;
 
 class UserController extends FilterController
 {
@@ -15,60 +16,68 @@ class UserController extends FilterController
     public function user(Request $request) {
         abort_unless($this->checkPermission('View User'), 403);
         $query = $this->filterUserData($request);
-        //Assiging Data to context
-        $data['pageData'] = $query->paginate(10)->appends($request->query());
-        $data['pageTitle'] = "Register Users";
+        $data = $this->renderResponse('Register Users', [
+            'pageData' => $query->paginate(10)->appends($request->query()),
+        ]);
 
         return view('admin.user.users')->with('data', $data);
     }
 
     public function create_user() {
         abort_unless($this->checkPermission('Create User'), 403);
-        $data['action'] = "Add";
-        $data['pageTitle'] = "Add Register User";
-        $data['country'] = $this->getCountry();
+        $data = $this->renderResponse('Add Register User', [
+            'action' => "Add",
+            'country' => $this->getCountry(),
+        ]);
 
-        return view('admin.user.users_action')->with('data',$data);
+        return view('admin.user.users_action')->with('data', $data);
     }
 
     public function store_user(UserStoreRequest $request) {
         abort_unless($this->checkPermission('Create User'), 403);
-        $user = new User();
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        $user->fill($input)->save();
+        $user = User::create($input);
 
-        return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
+        if ($user) {
+            if ($user->status == "Active"){
+                UserRegister::dispatch($user);
+            }
+            return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
+        } else {
+            return redirect()->route('admin.user')->with('danger','Whoops..! Some error occured !');
+        }
     }
 
     public function edit_user($id) {
         abort_unless($this->checkPermission('Edit User'), 403);
-        $data['action'] = "Edit";
-        $data['pageData'] = User::find($id);
-        $data['pageTitle'] = "Edit Register User";
-        $data['country'] = $this->getCountry();
+        $data = $this->renderResponse('Edit Register User', [
+            'action' => "Edit",
+            'pageData' => User::find($id),
+            'country' => $this->getCountry(),
+        ]);
 
-        return view('admin.user.users_action')->with('data',$data);
+        return view('admin.user.users_action')->with('data', $data);
     }
 
-    public function update_user(UserStoreRequest $request,$id) {
+    public function update_user(UserStoreRequest $request, $id) {
         abort_unless($this->checkPermission('Edit User'), 403);
         $user = User::find($id);
         $input = $request->all();
-        if($input['password'] == null){
+        if ($input['password'] == null) {
             unset($input['password']);
-        }else{
+        } else {
             $input['password'] = Hash::make($input['password']);
         }
-        $user->fill($input)->save();
+        $user->update($input);
 
-        return redirect()->route('admin.user')->with('success','Data Updated Successfuly');
+        return redirect()->route('admin.user')->with('success', 'Data Updated Successfuly');
     }
 
     public function destroy_user(Request $request) {
         abort_unless($this->checkPermission('Delete User'), 403);
         $dataTobeDelete = User::find($request->dataId);
-        if($dataTobeDelete->delete()) {
+        if ($dataTobeDelete->delete()) {
             return true;
         }
 
@@ -81,7 +90,7 @@ class UserController extends FilterController
         $selectedIds = $requestData['selectedIds'];
 
         $dataTobeDelete = User::whereIn('id', $selectedIds);
-        if($dataTobeDelete->delete()) {
+        if ($dataTobeDelete->delete()) {
             return true;
         }
 

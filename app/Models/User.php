@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +13,7 @@ class User extends Authenticatable
     use Notifiable,SoftDeletes, HasRoles, HasFactory;
 
     protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *

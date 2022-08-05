@@ -11,6 +11,7 @@ class ProductFactory extends Factory
         return [
             'category_id' => "1",
             'subcategory_id' => "2",
+            'store_id' => "1",
             'product_name' => $this->faker->name(),
             'product_short_description' => $this->faker->sentence(20),
             'product_long_description' => $this->faker->sentence(150),

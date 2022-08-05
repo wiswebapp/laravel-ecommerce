@@ -41,6 +41,7 @@ Route::group(['prefix' => config('app.admin_path_name')], function() use ($route
         $routeResource("product", "ProductController", 'product');
         $routeResource("user", "UserController", 'user');
         $routeResource("pages", "PagesController", 'pages');
+        $routeResource("store", "StoreController", 'store');
     });
 });
 ?>

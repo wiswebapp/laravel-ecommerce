@@ -67,14 +67,14 @@
                     @can('View Category')
                     <li class="nav-item <?= (in_array(Request::route()->getName(), getRoutesPath(['admin.category']))) ? "selected-opt":"" ?>">
                         <a href="{{route('admin.category')}}" class="nav-link">
-                        <i class="fas fa-sm fa-arrow-right"></i>&nbsp;Category
+                        <i class="fas fa-sm fa-arrow-right"></i>&nbsp;Product Category
                         </a>
                     </li>
                     @endcan
                     @can('View SubCategory')
                     <li class="nav-item <?= (in_array(Request::route()->getName(), getRoutesPath(['admin.subcategory']))) ? "selected-opt":"" ?>">
                         <a href="{{route('admin.subcategory')}}" class="nav-link">
-                        <i class="fas fa-sm fa-arrow-right"></i>&nbsp;SubCategory
+                        <i class="fas fa-sm fa-arrow-right"></i>&nbsp;Product SubCategory
                         </a>
                     </li>
                     @endcan
@@ -87,6 +87,15 @@
                     <a href="{{route('admin.product')}}" class="nav-link">
                     <i class="nav-icon fas fa-box"></i>
                     <p>Product</p>
+                    </a>
+                </li>
+                @endcan
+
+                @can('View Store')
+                <li class="nav-item">
+                    <a href="{{route('admin.store')}}" class="nav-link">
+                    <i class="nav-icon fas fa-store"></i>
+                    <p>Stores</p>
                     </a>
                 </li>
                 @endcan

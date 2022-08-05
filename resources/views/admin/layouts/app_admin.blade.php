@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{adminAssets('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <link rel="stylesheet" href="{{adminAssets('plugins/summernote/summernote-bs4.css')}}">
     <link rel="stylesheet" href="{{adminAssets('plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <link rel="stylesheet" href="{{adminAssets('dist/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{adminAssets('dist/css/custom-admin.css')}}">
     <!-- jQuery -->
@@ -48,14 +49,15 @@
 <script src="{{adminAssets('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{adminAssets('dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('js/app.js')}}"></script>
-<!-- overlayScrollbars -->
+<!-- PAGE PLUGINS -->
 <script src="{{adminAssets('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <script src="{{adminAssets('plugins/topbar/topbar.min.js')}}"></script>
 <script src="{{adminAssets('plugins/select2/js/select2.min.js')}}"></script>
-<!-- PAGE PLUGINS -->
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{adminAssets('plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
 <script src="{{adminAssets('plugins/summernote/summernote-bs4.min.js')}}"></script>
+<script src="{{adminAssets('plugins/admin-packeges/js/sweetalert.js')}}"></script>
+<script src="{{adminAssets('plugins/admin-packeges/js/jquery.timepicker.min.js')}}"></script>
+<!-- Custom JS -->
 <script src="{{adminAssets('dist/js/adminapp.js')}}"></script>
 <script src="{{adminAssets('dist/js/admin.js')}}"></script>
 @yield('customScripts')

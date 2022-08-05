@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Admin;
+use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -13,7 +13,17 @@ class InitController extends Controller
     {
         //Permission Creation
         if (DB::table('permissions')->get()->count() == 0 ) {
-            $modules = ['Role','Admin','User','Category','SubCategory','Product','Pages'];
+            $modules = [
+                'Role',
+                'Admin',
+                'User',
+                'Category',
+                'SubCategory',
+                'Product',
+                'Pages',
+                'Store',
+            ];
+
             foreach ($modules as $moduleName) {
 
                 Permission::create([
@@ -66,7 +76,7 @@ class InitController extends Controller
             $user->assignRole($role);
         }
 
-        return redirect('/?msg=Admin_panel_intialized_successfully');
+        return true;
     }
 
 }

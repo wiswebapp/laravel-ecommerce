@@ -16,7 +16,8 @@ class CreateProductsOptionsTable extends Migration
         Schema::create('products_options', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('product_id')->unsigned();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('store_id');
             $table->string('option_name');
             $table->string('option_value');
             $table->timestamps();
@@ -24,6 +25,7 @@ class CreateProductsOptionsTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('admin');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('store_id')->references('id')->on('stores');
         });
     }
 

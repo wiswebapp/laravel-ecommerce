@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class PageTableSeeder extends Seeder
 
         for ($i=0; $i < count($pages); $i++) {
 
-            \App\Pages::factory()->create([
+            \App\Models\Pages::factory()->create([
                 'page_title' => $pages[$i],
                 'page_slug' => str_replace(' ', '-', strtolower($pages[$i])),
             ]);

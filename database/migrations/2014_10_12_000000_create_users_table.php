@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable();
             $table->date('dob')->nullable();
             $table->string('imgName')->nullable();
-            $table->enum('status', ['Active','InActive']);            
+            $table->enum('status', ['Active','InActive']);
             $table->timestamp('blocked_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

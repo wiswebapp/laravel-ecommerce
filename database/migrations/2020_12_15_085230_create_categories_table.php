@@ -15,9 +15,9 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('category', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->id();
             $table->string('category_name');
-            $table->integer('parent_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->enum('status', ['Active','InActive'])->default('Active');
             $table->timestamps();
             $table->softDeletes();
