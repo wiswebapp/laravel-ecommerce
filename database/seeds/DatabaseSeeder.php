@@ -22,15 +22,16 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
+            PageTableSeeder::class,
             AdminTableSeeder::class,
             UserTableSeeder::class,
-            CategoryTableSeeder::class,
-            ProductTableSeeder::class,
             CountriesTableSeeder::class,
             StateTableSeeder::class,
             CitiesTableSeeder::class,
-            PageTableSeeder::class,
+            //Dependent Seeders
             StoreTableSeeder::class,
+            CategoryTableSeeder::class,
+            ProductTableSeeder::class,
         ]);
 
     }

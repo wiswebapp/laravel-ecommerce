@@ -18,7 +18,7 @@ class Store extends Model
      * @var array
      */
     protected $fillable = [
-        'owner','name','email','password','address','location','country','state','city','zipcode','image','status'
+        'owner','name','email','password','address','location','country','state','city','zipcode','store_timing','image','status'
     ];
 
     public function getCountry()
@@ -34,5 +34,10 @@ class Store extends Model
     public function getProducts()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function getStoreTimingAttribute($data)
+    {
+        return json_decode($data);
     }
 }

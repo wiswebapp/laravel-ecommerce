@@ -26,6 +26,7 @@ class CreateStoresTable extends Migration
             $table->integer('city')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('image');
+            $table->json('store_timing');
             $table->enum('status',['Active','InActive'])->default('Active');
             $table->softDeletes();
             $table->timestamps();

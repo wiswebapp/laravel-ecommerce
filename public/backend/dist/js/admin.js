@@ -217,6 +217,15 @@ function showOptionModal(mode = "Add", optionBoxId = '') {
 function removeOptionForm(optionId) {
     $(".option-row-" + optionId).html("");
 }
+
+function changeTimingSection(value) {
+    if (value != "daily") {
+        $(".customTimingBox").show();
+    } else {
+        $(".customTimingBox").hide();
+    }
+}
+
 $(document).ready(function(){
 
     $(".select-all-cb").click(function(){
@@ -297,4 +306,14 @@ $(document).ready(function(){
             }
         })
     })
+
+    $(".daySelectionCB").change(function(){
+        var isChecked = $(this).is(':checked');
+        var dataDay = $(this).attr('data-day');
+        if(isChecked) {
+            $("." + dataDay + "-box").slideDown();
+        } else {
+            $("." + dataDay + "-box").slideUp();
+        }
+    });
 })

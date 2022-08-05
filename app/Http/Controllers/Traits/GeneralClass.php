@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 trait GeneralClass
 {
+    public $dayArray = [
+        'Sun' => 'Sunday',
+        'Mon' => 'Monday',
+        'Tue' => 'Tuesday',
+        'Wed' => 'Wednesday',
+        'Thu' => 'Thursday',
+        'Fri' => 'Friday',
+        'Sat' => 'Saturday'
+    ];
+
     public function renderResponse($pageTitle, $otherParamertes = []) {
         $responseData = [];
         $responseData['pageTitle'] = $pageTitle;

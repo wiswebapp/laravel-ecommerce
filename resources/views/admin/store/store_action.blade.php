@@ -1,10 +1,9 @@
-<?php
-  $pageData = "";
+@php
   $action = $data['action'];
   if($action == "Edit"){
     $pageData = $data['pageData'];
   }
-?>
+@endphp
 
 @extends('admin.layouts.app_admin')
 @section('title',$data['pageTitle'])
@@ -100,6 +99,69 @@
                                 <label>Zip Code</label>
                                 <input type="text" name="zipcode" value="{{old('zipcode',$pageData->zipcode)}}" class="form-control {{ $errors->has('zipcode') ? 'is-invalid' : '' }}" placeholder="Enter zipcode">
                             </div>
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                <h3 class="card-title">Manage Store Timing <i class="fa fa-stopwatch"></i></h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="display: block;">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label">Set Timing For :</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="timingType" onchange="changeTimingSection(this.value)">
+                                                <option <?=($data['timingType']->type == "daily") ? "selected" : ""?> value="daily">Daily</option>
+                                                <option <?=($data['timingType']->type == "custom") ? "selected" : ""?> value="custom">Custom</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="customTimeBox">
+                                        <label class="text-info">Default Timing</label><hr>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3"> Morning slot:</label>
+                                            <input type="text" name="default_morning_start" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->default->morning->start}}">
+                                            <label class="col-sm-1"></label>
+                                            <input type="text" name="default_morning_end" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->default->morning->end}}">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3"> Evening slot:</label>
+                                            <input type="text" name="default_evening_start" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->default->evening->start}}">
+                                            <label class="col-sm-1"></label>
+                                            <input type="text" name="default_evening_end" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->default->evening->end}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group customTimingBox" style="display:<?=($pageData['store_timing']->default->type == "custom") ? "block" : "none"?>">
+                                        @foreach ($data['dayArray'] as $day)
+                                        @php
+                                            $day = strtolower($day);
+                                            $dayType = $pageData['store_timing']->$day->type;
+                                        @endphp
+                                        <div class="form-check">
+                                            <input name="{{$day}}[]" data-day="{{$day}}" class="form-check-input daySelectionCB" type="checkbox" <?=($dayType == "custom") ? "checked" : ""?>>
+                                            <label class="form-check-label">{{ucfirst($day)}}</label>
+                                        </div>
+                                        <div class="customTimeBox {{$day}}-box" style="display:<?=($dayType == "custom") ? "block" : "none"?>">
+                                        <label class="text-info">Custom Timing for {{ucfirst($day)}}</label><hr>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3"> Morning slot:</label>
+                                                <input type="text" name="{{$day}}[]" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->$day->morning->start}}">
+                                                <label class="col-sm-1"></label>
+                                                <input type="text" name="{{$day}}[]" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->$day->morning->end}}">
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3"> Evening slot:</label>
+                                                <input type="text" name="{{$day}}[]" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->$day->evening->start}}">
+                                                <label class="col-sm-1"></label>
+                                                <input type="text" name="{{$day}}[]" class="col-sm-4 form-control tpicker" value="{{$pageData['store_timing']->$day->evening->end}}">
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label>Status</label>
                                 <div class="form-check">
@@ -129,8 +191,10 @@
 @endsection
 @section('customScripts')
 <script>
-    <?php if($action == "Edit"): ?>
-    selectState('<?=$pageData->country?>', '<?=$pageData->state?>')
-    <?php endif ?>
+<?php if($action == "Edit"): ?>
+selectState('<?=$pageData->country?>', '<?=$pageData->state?>')
+<?php endif ?>
+$('.tpicker').attr("readonly", true);
+$('.tpicker').timepicker()
 </script>
 @endsection

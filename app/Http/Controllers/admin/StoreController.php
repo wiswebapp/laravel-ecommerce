@@ -24,6 +24,7 @@ class StoreController extends FilterController
         $data = $this->renderResponse('Add Store', [
             'country' => $this->getCountry(),
             'action' => 'Add',
+            'dayArray' => $this->dayArray,
         ]);
 
         return view('admin.store.store_action')->with('data', $data);
@@ -50,10 +51,13 @@ class StoreController extends FilterController
 
     public function edit_store($id) {
         abort_unless($this->checkPermission('Edit Store'), 403);
+        $storeData = Store::find($id);
         $data = $this->renderResponse('Edit Store', [
             'action' => 'Edit',
-            'pageData' => Store::find($id),
+            'pageData' => $storeData,
             'country' => $this->getCountry(),
+            'dayArray' => $this->dayArray,
+            'timingType' => $storeData['store_timing']->default,
         ]);
 
         return view('admin.store.store_action')->with('data',$data);
@@ -62,7 +66,36 @@ class StoreController extends FilterController
     public function update_store(CreateStore $request,$id) {
         abort_unless($this->checkPermission('Edit Store'), 403);
         $store = Store::find($id);
-        $input = $request->all();
+        $exceptArray = array_merge( array_map('strtolower', array_values($this->dayArray)),['default_morning_start', 'default_morning_end', 'default_evening_start', 'default_evening_end']);
+        $input = $request->except($exceptArray);
+
+        //Creating timing json
+        $storeTimings = [];
+        $selectionType = "default";
+        $storeTimings['default']['morning']['start'] = $request->get('default_morning_start');
+        $storeTimings['default']['morning']['end'] = $request->get('default_morning_end');
+        $storeTimings['default']['evening']['start'] = $request->get('default_evening_start');
+        $storeTimings['default']['evening']['end'] = $request->get('default_evening_end');
+        foreach($this->dayArray as $day){
+            $day = strtolower($day);
+            $dayData =$request->get($day);
+            if ($dayData[0] == "on" && $input['timingType'] != "daily") {
+                $selectionType = "custom";
+                $storeTimings[$day]['type'] = $selectionType;
+                $storeTimings[$day]['morning']['start'] = $dayData[1];
+                $storeTimings[$day]['morning']['end'] = $dayData[2];
+                $storeTimings[$day]['evening']['start'] = $dayData[3];
+                $storeTimings[$day]['evening']['end'] = $dayData[4];
+            } else {
+                $storeTimings[$day]['type'] = "default";
+                $storeTimings[$day]['morning']['start'] = $request->get('default_morning_start');
+                $storeTimings[$day]['morning']['end'] = $request->get('default_morning_end');
+                $storeTimings[$day]['evening']['start'] = $request->get('default_evening_start');
+                $storeTimings[$day]['evening']['end'] = $request->get('default_evening_end');
+            }
+        }
+        $storeTimings['default']['type'] = $selectionType;
+        $input['store_timing'] = json_encode($storeTimings);
 
         if ($request->hasFile('image')) {
             $currentImage = $store->image;
