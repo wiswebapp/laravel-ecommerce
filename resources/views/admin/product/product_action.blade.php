@@ -17,7 +17,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{$data['pageTitle']}}</h1>
+            <h1>{{$data['pageTitle']}}</h1><hr>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container">
+      <div class="container-fluid">
             @include('includes.alert_msg')
             @if ($action == "Edit")
                 {{Form::open(['action' => ['admin\ProductController@update_product',$pageData->id],'method'=>'PUT','enctype'=>'multipart/form-data'])}}
