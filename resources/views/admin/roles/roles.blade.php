@@ -14,8 +14,7 @@ $routeEditUrl = url(config('app.admin_path_name').'/roles/edit/');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>{{$data['pageTitle']}} <a href="{{$routeCreateUrl}}" class="float-right btn btn-sm btn-info"><i
-                                class="fa fa-plus fa-sm"></i> Add {{$data['pageTitle']}}</a></h1>
+                    <h1>{{$data['pageTitle']}} <a href="{{$routeCreateUrl}}" class="float-right btn btn-sm btn-info"><i class="fa fa-plus fa-sm"></i> Add {{$data['pageTitle']}}</a></h1>
                     <hr>
                 </div>
             </div>

@@ -27,7 +27,7 @@ class AdminController extends FilterController
     {
         abort_unless($this->checkPermission('Create Admin'), 403);
         $data['action'] = "Add";
-        $data['pageTitle'] = "Add Pages";
+        $data['pageTitle'] = "Add Admin User";
         $data['roleList'] = Role::all();
 
         return view('admin.user.admin_action', compact('data'));
