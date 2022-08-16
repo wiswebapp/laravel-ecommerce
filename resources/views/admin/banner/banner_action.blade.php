@@ -44,14 +44,9 @@
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
-                    <label>Status</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" <?=($action == "Add") ? "checked" : ""?> value='Active' <?=($pageData->status == 'Active') ? "checked" : ""?>>
-                        <label class="form-check-label">Active</label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input class="form-check-input" type="radio" name="status" value='InActive' <?=($pageData->status == 'InActive') ? "checked" : ""?>>
-                        <label class="form-check-label">InActive</label>
-                    </div>
+                        <label>Banner Order</label>
+                        <input required type="text" name="order" value="{{old('order',$pageData->order)}}"
+                            class="form-control {{ $errors->has('order') ? 'is-invalid' : '' }}" placeholder="Enter order">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -61,6 +56,21 @@
                         <img src="{{Storage::url('public/banner/'.$pageData->path)}}" alt="Banner Image" class="img-thumbnail" style="height: 150px;width: 350px;">
                         @endif
                         <input type="file" name="path" class="form-control {{ $errors->has('path') ? 'is-invalid' : '' }}" >
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" <?=($action=="Add" ) ? "checked" : "" ?>
+                            value='Active'
+                            <?=($pageData->status == 'Active') ? "checked" : ""?>>
+                            <label class="form-check-label">Active</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input class="form-check-input" type="radio" name="status" value='InActive' <?=($pageData->status ==
+                            'InActive') ? "checked" : ""?>>
+                            <label class="form-check-label">InActive</label>
+                        </div>
                     </div>
                 </div>
               </div>

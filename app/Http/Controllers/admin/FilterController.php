@@ -144,7 +144,7 @@ class FilterController extends GeneralController {
     }
 
     public function filterBannerData(Request $request, $getAllData = false) {
-        $query = Banner::orderBy('id', 'desc');
+        $query = Banner::orderBy('order', 'asc');
         $selectedIds = $request->input('selectedIds');
         //Filter Only if get all data is not selected
         if (! $getAllData) {
