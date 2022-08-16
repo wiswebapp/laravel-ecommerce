@@ -29,6 +29,7 @@ class CreateProduct extends FormRequest
             'product_name' => 'required|max:255',
             'product_short_description' => 'required',
             'product_long_description' => 'required',
+            'product_image' => 'file|mimes:jpg,png,jpeg,gif',
             'price' => 'required|integer',
             'is_available' => 'required',
             'status' => 'required',
