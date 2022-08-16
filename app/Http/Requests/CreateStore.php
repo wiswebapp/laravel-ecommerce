@@ -35,6 +35,7 @@ class CreateStore extends FormRequest
             'state' => 'required',
             'zipcode' => 'required',
             'status' => 'required',
+            'image' => 'file|mimes:jpg,png,jpeg,gif'
         ];
 
         if($method == "POST") {

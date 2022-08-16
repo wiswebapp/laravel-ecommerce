@@ -27,6 +27,7 @@ class CreateBanner extends FormRequest
             'title' => 'required|max:255',
             'status' => 'required',
             'order' => 'required|numeric|min:1|max:99',
+            'path' => 'file|mimes:jpg,png,jpeg,gif'
         ];
     }
 }
