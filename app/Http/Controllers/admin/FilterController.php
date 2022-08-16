@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Store;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 
 class FilterController extends GeneralController {
@@ -135,6 +136,27 @@ class FilterController extends GeneralController {
             }
 
             if(!empty($request->input('status'))){
+                $query->where('status', $request->input('status'));
+            }
+        }
+
+        return $query;
+    }
+
+    public function filterBannerData(Request $request, $getAllData = false) {
+        $query = Banner::orderBy('id', 'desc');
+        $selectedIds = $request->input('selectedIds');
+        //Filter Only if get all data is not selected
+        if (! $getAllData) {
+            if (! empty($request->input('selectedIds'))) {
+                $query->whereIn('id', explode(',', $selectedIds));
+            }
+
+            if(! empty($request->input('name'))){
+                $query->where('title','LIKE','%'. $request->input('name') .'%');
+            }
+
+            if(! empty($request->input('status'))){
                 $query->where('status', $request->input('status'));
             }
         }

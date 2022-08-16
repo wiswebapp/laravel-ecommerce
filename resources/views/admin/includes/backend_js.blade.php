@@ -14,6 +14,8 @@ function removeData(dataType, dataId) {
         routeUrl = '{{route('admin.destroy_admin')}}';
     } else if(dataType == "store") {
         routeUrl = '{{route('admin.destroy_store')}}';
+    } else if(dataType == "banner") {
+        routeUrl = '{{route('admin.destroy_banner')}}';
     }
 
     removeSingleData(routeUrl, htmlText, dataId);
