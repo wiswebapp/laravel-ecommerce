@@ -34,11 +34,9 @@ class ProductController extends FilterController
 
     public function store_product(CreateProduct $request) {
         abort_unless($this->checkPermission('Create Product'), 403);
-
         if ($request->hasFile('product_image')) {
-            $extension = $request->file('product_image')->extension();
-            $newFileName = "PRODUCT_".time().".".$extension;
-            $uploadPath = '/public/product/';
+            $newFileName = $this->generateFileName('PRODUCT', $request->file('product_image')->extension());
+            $uploadPath = $this->uploadPath['product'];
             if (! Storage::exists($uploadPath)) {
                 Storage::makeDirectory($uploadPath);
             }
@@ -88,14 +86,12 @@ class ProductController extends FilterController
         }
         if ($request->hasFile('product_image')) {
             $currentImage = $product->product_image;
-            $extension = $request->file('product_image')->extension();
-            $newFileName = "PRODUCT_".time().".".$extension;
-            $uploadPath = '/public/product/';
-            $fileStoragePath = public_path('storage/product/'. $currentImage);
+            $newFileName = $this->generateFileName('PRODUCT', $request->file('product_image')->extension());
+            $fileStoragePath = $this->uploadPath['product_public'] . $currentImage;
             if ( file_exists($fileStoragePath)) {
                 unlink($fileStoragePath);
             }
-            $request->file('product_image')->storeAs($uploadPath, $newFileName);
+            $request->file('product_image')->storeAs($this->uploadPath['product'], $newFileName);
             $product->product_image = $newFileName;
         }
         $update = $product->update($request->all());
@@ -110,6 +106,10 @@ class ProductController extends FilterController
     public function destroy_product( Request $request) {
         abort_unless($this->checkPermission('Delete Product'), 403);
         $product = Product::find($request->dataId);
+        $fileStoragePath = $this->uploadPath['store_public'] . $product->product_image;
+        if ( file_exists($fileStoragePath)) {
+            unlink($fileStoragePath);
+        }
         if ($product->delete()) {
             return true;
         }

@@ -35,9 +35,8 @@ class StoreController extends FilterController
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         if ($request->hasFile('image')) {
-            $extension = $request->file('image')->extension();
-            $newFileName = "STORE_".time().".".$extension;
-            $uploadPath = '/public/store/';
+            $newFileName = $this->generateFileName('STORE', $request->file('image')->extension());
+            $uploadPath = $this->uploadPath['store'];
             $request->file('image')->storeAs($uploadPath, $newFileName);
             $input['image'] = $newFileName;
         }
@@ -99,14 +98,12 @@ class StoreController extends FilterController
 
         if ($request->hasFile('image')) {
             $currentImage = $store->image;
-            $extension = $request->file('image')->extension();
-            $newFileName = "STORE_".time().".".$extension;
-            $uploadPath = '/public/store/';
-            $fileStoragePath = public_path('storage/store/'. $currentImage);
+            $newFileName = $this->generateFileName('STORE', $request->file('image')->extension());
+            $fileStoragePath = $this->uploadPath['store_public'] . $currentImage;
             if ( file_exists($fileStoragePath)) {
                 unlink($fileStoragePath);
             }
-            $request->file('image')->storeAs($uploadPath, $newFileName);
+            $request->file('image')->storeAs($this->uploadPath['store'], $newFileName);
             $input['image'] = $newFileName;
         }
 
@@ -123,6 +120,10 @@ class StoreController extends FilterController
     public function destroy_store(Request $request) {
         abort_unless($this->checkPermission('Delete Store'), 403);
         $dataTobeDelete = Store::find($request->dataId);
+        $fileStoragePath = $this->uploadPath['store_public'] . $dataTobeDelete->image;
+        if ( file_exists($fileStoragePath)) {
+            unlink($fileStoragePath);
+        }
         if($dataTobeDelete->delete()) {
             return true;
         }
