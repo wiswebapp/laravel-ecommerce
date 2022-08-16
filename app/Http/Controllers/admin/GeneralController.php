@@ -11,6 +11,30 @@ class GeneralController extends Controller
 {
     use GeneralClass;
 
+    public $uploadPath;
+
+    public function __construct() {
+
+        $pathArr = [];
+        $imageFolder = ['banner', 'product', 'store'];
+
+        foreach($imageFolder as $value) {
+            $pathArr[$value] = '/public/' . $value . '/';
+            $pathArr[$value . "_public"] = public_path('storage/' . $value . '/');
+            $pathArr[$value . "_storage"] = storage_path($value . '/');
+        }
+
+        $this->uploadPath = $pathArr;
+    }
+
+    public function generateFileName($suffix = '', $extension = '') {
+        $suffix = (! empty($suffix)) ? $suffix.'_' : '';
+        $extension = (! empty($extension)) ? '.' . $extension : '';
+        $fileName =  $suffix . time() . $extension;
+
+        return $fileName;
+    }
+
     public function getCountry() {
         return Country::all()->sortBy('name');
     }

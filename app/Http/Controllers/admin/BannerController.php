@@ -32,9 +32,8 @@ class BannerController extends FilterController
         $banner->title = $request->input('title');
         $banner->status = $request->input('status');
         if ($request->hasFile('path')) {
-            $extension = $request->file('path')->extension();
-            $newFileName = "BANNER_".time().".".$extension;
-            $uploadPath = '/public/banner/';
+            $newFileName = $this->generateFileName('BANNER', $request->file('path')->extension());
+            $uploadPath = $this->uploadPath['banner'];
             if (! Storage::exists($uploadPath)) {
                 Storage::makeDirectory($uploadPath);
             }
@@ -62,14 +61,12 @@ class BannerController extends FilterController
         $banner->status = $request->input('status');
         if ($request->hasFile('path')) {
             $currentImage = $banner->path;
-            $extension = $request->file('path')->extension();
-            $newFileName = "BANNER_".time().".".$extension;
-            $uploadPath = '/public/banner/';
-            $fileStoragePath = public_path('storage/banner/'. $currentImage);
+            $newFileName = $this->generateFileName('BANNER', $request->file('path')->extension());
+            $fileStoragePath = $this->uploadPath['banner_public'] . $currentImage;
             if ( file_exists($fileStoragePath)) {
                 unlink($fileStoragePath);
             }
-            $request->file('path')->storeAs($uploadPath, $newFileName);
+            $request->file('path')->storeAs($this->uploadPath['banner'], $newFileName);
             $banner->path = $newFileName;
         }
         $banner->save();
@@ -81,7 +78,7 @@ class BannerController extends FilterController
         abort_unless($this->checkPermission('Delete Banner'), 403);
         $banner = Banner::find($request->dataId);
 
-        $fileStoragePath = public_path('storage/banner/'. $banner->path);
+        $fileStoragePath = public_path($this->storagePath['banner'] . $banner->path);
         if ( file_exists($fileStoragePath)) {
             unlink($fileStoragePath);
         }
