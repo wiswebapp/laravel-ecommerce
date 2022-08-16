@@ -109,6 +109,15 @@
                 </li>
                 @endcan
 
+                @can('View Banner')
+                <li class="nav-item">
+                    <a href="{{route('admin.banner')}}" class="nav-link">
+                    <i class="nav-icon fas fa-credit-card"></i>
+                    <p>Banner</p>
+                    </a>
+                </li>
+                @endcan
+
             </ul>
         </nav>
     </div>

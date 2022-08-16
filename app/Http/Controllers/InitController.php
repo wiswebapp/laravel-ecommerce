@@ -22,6 +22,7 @@ class InitController extends Controller
                 'Product',
                 'Pages',
                 'Store',
+                'Banner',
             ];
 
             foreach ($modules as $moduleName) {
