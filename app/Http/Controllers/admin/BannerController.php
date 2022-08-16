@@ -31,6 +31,7 @@ class BannerController extends FilterController
         $banner = new Banner();
         $banner->title = $request->input('title');
         $banner->status = $request->input('status');
+        $banner->order = $request->input('order');
         if ($request->hasFile('path')) {
             $newFileName = $this->generateFileName('BANNER', $request->file('path')->extension());
             $uploadPath = $this->uploadPath['banner'];
@@ -59,6 +60,7 @@ class BannerController extends FilterController
         $banner = Banner::find($id);
         $banner->title = $request->input('title');
         $banner->status = $request->input('status');
+        $banner->order = $request->input('order');
         if ($request->hasFile('path')) {
             $currentImage = $banner->path;
             $newFileName = $this->generateFileName('BANNER', $request->file('path')->extension());
@@ -69,7 +71,7 @@ class BannerController extends FilterController
             $request->file('path')->storeAs($this->uploadPath['banner'], $newFileName);
             $banner->path = $newFileName;
         }
-        $banner->save();
+        $banner->update();
 
         return redirect()->route('admin.banner')->with('success','Data Updated Successfuly');
     }

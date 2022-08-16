@@ -26,6 +26,7 @@ class CreateBanner extends FormRequest
         return [
             'title' => 'required|max:255',
             'status' => 'required',
+            'order' => 'required|numeric|min:1|max:99',
         ];
     }
 }
