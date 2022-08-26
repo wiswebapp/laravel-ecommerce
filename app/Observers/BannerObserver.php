@@ -19,7 +19,7 @@ class BannerObserver
             return;
         }
 
-        $lowerPriorityBanners = Banner::where('order', '>=', $banner->order)
+        $lowerPriorityBanners = Banner::where('order', '>=', $banner->order)->whereNotIn('id', [$banner->id])
             ->get();
 
         foreach ($lowerPriorityBanners as $lowerPriorityBanner) {

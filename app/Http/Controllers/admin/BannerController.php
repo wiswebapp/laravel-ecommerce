@@ -80,7 +80,7 @@ class BannerController extends FilterController
         abort_unless($this->checkPermission('Delete Banner'), 403);
         $banner = Banner::find($request->dataId);
 
-        $fileStoragePath = public_path($this->storagePath['banner'] . $banner->path);
+        $fileStoragePath = $this->uploadPath['banner_public'] . $banner->path;
         if ( file_exists($fileStoragePath)) {
             unlink($fileStoragePath);
         }
