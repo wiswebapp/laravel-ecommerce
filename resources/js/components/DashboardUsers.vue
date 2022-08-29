@@ -1,32 +1,20 @@
 <template lang="pug">
-    <div class="col-md-6">
-        <div class="card card-default">
-            <div class="card-body">
-                <h4>User Data <small>[Latest top 10]</small></h4>
-                <table class="table table-striped projects table-responsive" style="display: inline-table;">
-                    <thead>
-                        <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="user in userData" v-bind:key="user.id">
-                        <td>
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <img alt="No profile" class="table-avatar" src="https://adminlte.io/themes/v3/dist/img/avatar.png">
-                                </li>
-                            </ul>
-                        </td>
-                        <td>{{user.lname}} {{user.fname}}</td>
-                        <td>{{user.phone}}</td>
-                        <td><span :class="user.status == 'Active' ? 'badge badge-success' : 'badge badge-danger'" >{{user.status}}</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="col-md-4" v-if="userData.length">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Latest Users</h3>
+            </div>
+            <div class="card-body p-0">
+                <ul class="users-list clearfix">
+                    <li v-for="user in userData">
+                        <img src="https://randomuser.me/api/portraits/lego/3.jpg" alt="User Image">
+                        <a class="users-list-name" href="#">{{user.fname}} {{user.lname}}</a>
+                        <span class="users-list-date">{{user.registered_on}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                <a href="javascript:" @click="redirectUser" class="btn btn-sm btn-default">View All <em class=" fa fa-arrow-circle-right"></em></a>
             </div>
         </div>
     </div>
@@ -37,27 +25,20 @@ export default {
     data(){
         return {
             userData : [],
-            user: {
-                id: '',
-                fname : '',
-                lname : '',
-                email : '',
-                phone : '',
-                status : '',
-            },
-            user_id : '',
-            edit : false
         }
     },
     created() {
         this.fetchUserData();
     },
     methods: {
+        redirectUser() {
+            window.location.href = "user"
+        },
         fetchUserData(){
-            fetch('getDashboardUser')
+            fetch('vue/getDashboardUser')
                 .then(res => res.json())
                 .then(res => {
-                    this.userData = res.userData;
+                    this.userData = res
                 })
         }
     }

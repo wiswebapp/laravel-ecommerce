@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 
 class DashboardController extends Controller
 {
@@ -21,7 +22,33 @@ class DashboardController extends Controller
 
     public function getUserData()
     {
-        $data['userData'] = User::all()->whereNull('deleted_at')->take(10);
+        $data = [];
+        if(! $this->checkPermission('View User')) {
+            return $data;
+        }
+
+        $data = User::select(['fname', 'lname', 'created_at'])->limit(8)->orderBy('created_at', 'desc')->get();
+        $data->map(function ($user) {
+            $user->registered_on = $user->created_at->toDateString();
+        });
+
+        return $data;
+    }
+
+    public function getStoreData()
+    {
+        $data = [];
+        if(! $this->checkPermission('View Store')) {
+            return $data;
+        }
+
+        $data = Store::select(['owner', 'name', 'created_at', 'email', 'image'])->limit(4)->orderBy('created_at', 'desc')->get();
+        if (! empty($data)) {
+            $data->map(function ($user) {
+                $user->registered_on = $user->created_at->toDateString();
+            });
+        }
+
         return $data;
     }
 }

@@ -76,7 +76,7 @@
           <div class="col-md-12">
             <div class="row">
                 <dashboard-users></dashboard-users>
-                <products-users></products-users>
+                <dashboard-stores></dashboard-products>
             </div>
           </div>
         </div>

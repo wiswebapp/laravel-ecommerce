@@ -20,12 +20,12 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component(
-    'dashboard-users',
-    require('./components/DashboardUsers.vue').default
+    'dashboard-stores',
+    require('./components/DashboardStores.vue').default
 );
 Vue.component(
-    'products-users',
-    require('./components/DashboardProducts.vue').default
+    'dashboard-users',
+    require('./components/DashboardUsers.vue').default
 );
 
 /**
