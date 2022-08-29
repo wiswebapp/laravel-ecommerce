@@ -6,6 +6,31 @@
  * please do not create functions and events anywhere
  *
  */
+
+function getDashboardQuote() {
+    $.ajax({
+        type : "GET",
+        dataType: "json",
+        url : "https://type.fit/api/quotes",
+        beforeSend : function() {
+            $(".refresh-quote").hide();
+            $(".quote-text").html("");
+            $(".quote-author").html("");
+        },
+        success : function(response) {
+            totalQuotes = response.length;
+            var random = Math.floor(Math.random() * totalQuotes);
+            $(".quote-text").html(response[random].text);
+            if(response[random].author) {
+                $(".quote-author").html(" - " + response[random].author);
+            }
+            setTimeout(function () {
+                $(".refresh-quote").show();
+            }, 5000);
+        }
+    });
+}
+
 function getAdminPath() {
     return new Promise((resolve, reject) => {
         $.ajax({

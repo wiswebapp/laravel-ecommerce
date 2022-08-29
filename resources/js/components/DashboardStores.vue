@@ -1,5 +1,5 @@
 <template lang="pug">
-    <div class="col-md-4" v-if="storeData.length">
+    <div class="col-md-8" v-if="storeData.length">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Recently Added Stores</h3>
@@ -12,7 +12,7 @@
                             <img v-else :src='"https://dummyimage.com/128x128/343a40/fff?text=store"' alt="Product Image" class="img-size-50"></img>
                         </div>
                         <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">{{store.name}}</a>
+                            <span class="product-title">{{store.name}}</span>
                             <span class="product-description">{{store.owner}} (<small><i>{{store.email}}</i></small>)</span>
                         </div>
                     </li>

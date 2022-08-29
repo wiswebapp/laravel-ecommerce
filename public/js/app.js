@@ -40418,7 +40418,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.storeData.length
-    ? _c("div", { staticClass: "col-md-4" }, [
+    ? _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -40448,14 +40448,9 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "product-info" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "product-title",
-                        attrs: { href: "javascript:void(0)" }
-                      },
-                      [_vm._v(_vm._s(store.name))]
-                    ),
+                    _c("span", { staticClass: "product-title" }, [
+                      _vm._v(_vm._s(store.name))
+                    ]),
                     _vm._v(" "),
                     _c("span", { staticClass: "product-description" }, [
                       _vm._v(_vm._s(store.owner) + " ("),

@@ -42,7 +42,7 @@ class DashboardController extends Controller
             return $data;
         }
 
-        $data = Store::select(['owner', 'name', 'created_at', 'email', 'image'])->limit(4)->orderBy('created_at', 'desc')->get();
+        $data = Store::select(['owner', 'name', 'created_at', 'email', 'image'])->where('status', 'Active')->limit(4)->orderBy('id', 'desc')->get();
         if (! empty($data)) {
             $data->map(function ($user) {
                 $user->registered_on = $user->created_at->toDateString();
