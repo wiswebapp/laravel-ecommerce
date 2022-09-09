@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\User;
+use App\Models\Store;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Store;
 
 class DashboardController extends Controller
 {
@@ -35,14 +36,26 @@ class DashboardController extends Controller
         return $data;
     }
 
-    public function getStoreData()
+    public function getStoreData(Request $request)
     {
         $data = [];
         if(! $this->checkPermission('View Store')) {
             return $data;
         }
 
-        $data = Store::select(['owner', 'name', 'created_at', 'email', 'image'])->where('status', 'Active')->limit(4)->orderBy('id', 'desc')->get();
+        $data = Store::where('id', $request->storeId)->first();
+
+        return $data;
+    }
+
+    public function getStoresData()
+    {
+        $data = [];
+        if(! $this->checkPermission('View Store')) {
+            return $data;
+        }
+
+        $data = Store::select(['id', 'owner', 'name', 'created_at', 'email', 'image', 'status'])->limit(4)->orderBy('id', 'desc')->get();
         if (! empty($data)) {
             $data->map(function ($user) {
                 $user->registered_on = $user->created_at->toDateString();
