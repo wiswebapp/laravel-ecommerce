@@ -72,9 +72,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
+        /**
+         *
+         * In Laravel 8 namespace was commented out, i remove namespace from chain, because my web routes not fully moved to Laravel 8 syntax and i need this namespace
+         *
+         * https://stackoverflow.com/questions/59735544/laravel-target-class-app-http-controllers-app-http-controllers-apicontroller-d#66419585
+         */
+
         Route::prefix('api')
              ->middleware('api')
-             ->namespace($this->namespace)
+            //  ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
 }
