@@ -126,11 +126,11 @@
           <!-- start copy -->
           <tr>
             <td bgcolor="#ffffff" align="left" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <h1 style="margin: 0 0 12px; font-size: 32px; font-weight: 400; line-height: 48px;">Welcome, {{$user->lname}} {{$user->fname}}!</h1>
+              <h1 style="margin: 0 0 12px; font-size: 32px; font-weight: 400; line-height: 48px;">Welcome, {{$user['lname']}} {{$user['fname']}}!</h1>
               <ul>
-                <li><b>Username :</b> {{$user->email}}</li>
-                <li><b>Email address :</b> {{$user->email}}</li>
-                <li><b>Mobile Number :</b> {{$user->phone}}</li>
+                <li><b>Username :</b> {{$user['email']}}</li>
+                <li><b>Email address :</b> {{$user['email']}}</li>
+                <li><b>Mobile Number :</b> {{$user['phone']}}</li>
               </ul>
               <p style="margin: 0;">Thank you for signing up with Paste. We strive to produce high quality email templates that you can use for your transactional or marketing needs.</p>
             </td>

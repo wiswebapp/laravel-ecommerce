@@ -8663,10 +8663,18 @@ h1, h2, h3, h4, h5,
   @media (max-width: 991.98px) {
     .product {
       margin-bottom: 30px; } }
-  .product .img-prod {
+.product .img-prod {
+    height: 250px;
     position: relative;
     display: block;
-    overflow: hidden; }
+    overflow: hidden;
+}
+.product .store-img-prod {
+    height: 175px;
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
     .product .img-prod .overlay {
       position: absolute;
       top: 0;
@@ -9169,6 +9177,10 @@ h1, h2, h3, h4, h5,
 textarea.form-control {
   height: inherit !important; }
 
+.store-dashboard a img{
+    height: 250px;
+}
+
 .ftco-animate {
   opacity: 0;
   visibility: hidden; }
@@ -9187,7 +9199,7 @@ textarea.form-control {
   font-size: 24px; }
 
 .ftco-section {
-  /* padding: 6em 0; */
+  padding: 6em 0;
   position: relative; }
 
 .ftco-no-pt {

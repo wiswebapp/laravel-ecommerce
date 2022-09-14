@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Banner;
-use App\Events\UserRegister;
+use App\Events\UserRegisterEvent;
 use App\Observers\BannerObserver;
 use App\Listeners\UserRegisterListner;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
         // Registered::class => [
         //     SendEmailVerificationNotification::class,
         // ],
-        UserRegister::class => [
+        UserRegisterEvent::class => [
             UserRegisterListner::class
         ]
     ];
