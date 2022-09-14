@@ -5,13 +5,6 @@
 @section('content')
 <div class="content-wrapper">
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Welcome Admin</h1>
-          </div>
-        </div>
-      </div>
     </div>
 
     <section class="content">
@@ -21,6 +14,8 @@
             <div class="card">
                 <div class="card-header border-transparent">
                     <h3><i class="fa fa-cloud"></i> {{greetings()." ".Auth::user()->name}}</h3>
+                    <span class="quote-text"></span> <i class="quote-author"></i>
+                    <span class="btn btn-sm refresh-quote" onclick="getDashboardQuote()"><i class="fa fa-random"></i></span>
                 </div>
             </div>
           </div>
@@ -76,11 +71,15 @@
           <div class="col-md-12">
             <div class="row">
                 <dashboard-users></dashboard-users>
-                <products-users></products-users>
+                <dashboard-stores></dashboard-products>
             </div>
           </div>
         </div>
       </div>
     </section>
   </div>
+@endsection
+
+@section('customScripts')
+<script>getDashboardQuote();</script>
 @endsection

@@ -26,8 +26,11 @@ Route::group(['prefix' => config('app.admin_path_name')], function() use ($route
         //Basic Routes
         Route::get('', 'DashboardController@index')->name('admin.home');
         Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
-        Route::get('getDashboardUser', 'DashboardController@getUserData');
         Route::post('fetchData', 'GeneralController@get_ajax_data');
+        //Dashboard Vue Routes
+        Route::get('vue/getDashboardUser', 'DashboardController@getUserData');
+        Route::get('vue/getDashboardStore', 'DashboardController@getStoreData');
+        Route::get('vue/getDashboardStores', 'DashboardController@getStoresData');
         // Ajax Calls
         Route::delete('user/removeMultiple', 'UserController@destroy_multiple_user');
         Route::post('product/getCat', 'CategoryController@get_ajax_category')->name('ajax.getCat');
