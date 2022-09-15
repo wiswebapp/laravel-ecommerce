@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="js/jqueryui/jquery-ui.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
@@ -25,14 +26,14 @@
 </head>
 
 <body class="goto-here">
-    
+
     @include('includes.header')
 
     @yield('content')
-    
+
     @include('includes.footer')
 
     @include('includes.scripts')
-    
+
 </body>
 </html>

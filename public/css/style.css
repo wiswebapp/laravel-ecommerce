@@ -8675,6 +8675,39 @@ h1, h2, h3, h4, h5,
     display: block;
     overflow: hidden;
 }
+.homeSearchBox {
+    margin:0 0 3em 0;
+    box-shadow: 2px 2px 26px rgb(0 0 0 / 15%);
+    background: rgba(0,0,0,0.80);
+    padding: 15px 20px 20px 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    position: relative;
+}
+.homeSearchForm {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.homeSearchForm p {
+    font-size: 28px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 16px;
+    display: block;
+}
+.homeSearchForm .deliver-address {
+    display: flex;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
     .product .img-prod .overlay {
       position: absolute;
       top: 0;

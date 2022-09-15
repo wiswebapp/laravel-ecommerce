@@ -15,6 +15,17 @@
 </section>
 <section class="ftco-section">
   <div class="container">
+    <div class="homeSearchBox row text-center" style="">
+        <form class="homeSearchForm">
+            <p>Browse Store-based Deliveries in Your Area</p>
+            <div class="deliver-address">
+                <input type="hidden" id="home-location-long">
+                <input type="hidden" id="home-location-lat">
+                <input type="text" class="" style="width:90%" id="home-location-search">
+                <input type="submit" class="home-location-btn btn-danger" style="width:10%" value="search">
+            </div>
+        </div>
+    </div>
     <div class="row no-gutters ftco-services">
       <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
         <div class="media block-6 services mb-md-0 mb-4">
@@ -278,9 +289,10 @@
 <section class="ftco-section ftco-partner">
   <div class="container heading-section text-center ftco-animate">
     <span class="subheading">Featured Stores on Portal</span>
-    <h2 class="mb-4">Populur Stores</h2>
+    <h2 class="mb-4">Populur Stores</h2><hr>
     <div class="row">
       @foreach ($data['storeData'] as $store)
+      @if ($store->image)
       <div class="col-md-2 ftco-animate fadeInUp ftco-animated">
         <div class="product">
           <a href="ahmed-reeves" class="store-img-prod">
@@ -292,6 +304,7 @@
           </div>
         </div>
       </div>
+      @endif
       @endforeach
     </div>
   </div>
