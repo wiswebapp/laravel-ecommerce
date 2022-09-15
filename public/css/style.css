@@ -8700,6 +8700,23 @@ h1, h2, h3, h4, h5,
     margin-bottom: 16px;
     display: block;
 }
+.storeListingBox {
+    margin:0 0 3em 0;
+    border-radius: 5px;
+    padding: 15px 20px 20px 20px;
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 5.4rem;
+    background: rgb(255, 255, 255);
+}
+.storeListingBox p {
+    margin: 0px;
+    color: #fff;
+    display: block;
+}
+
 .homeSearchForm .deliver-address {
     display: flex;
     max-width: 100%;
@@ -9138,15 +9155,13 @@ h1, h2, h3, h4, h5,
     -ms-border-radius: 0;
     border-radius: 0; }
     .subscribe-form .form-group input {
-      background: #fff !important;
-      border: 1px solid transparent;
-      color: black !important;
-      font-size: 14px;
-      font-weight: 300;
-      -webkit-border-radius: 30px;
-      -moz-border-radius: 30px;
-      -ms-border-radius: 30px;
-      border-radius: 30px; }
+        border: 1px solid #00000029;
+        border-radius: 0px;
+        background: #fff !important;
+        color: black !important;
+        font-size: 14px;
+        font-weight: 300;
+    }
       .subscribe-form .form-group input::-webkit-input-placeholder {
         /* Chrome/Opera/Safari */
         color: black !important; }
@@ -9166,7 +9181,6 @@ h1, h2, h3, h4, h5,
       -moz-border-radius: 0;
       -ms-border-radius: 0;
       border-radius: 0;
-      font-size: 12px;
       background: #FC5859 !important; }
       .subscribe-form .form-group .submit:hover {
         cursor: pointer; }

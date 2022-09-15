@@ -16,15 +16,16 @@
 <section class="ftco-section">
   <div class="container">
     <div class="homeSearchBox row text-center" style="">
-        <form class="homeSearchForm">
+        {{ Form::open(['method' => 'post', 'class' => 'homeSearchForm', 'url' => 'store-listing']) }}
             <p>Browse Store-based Deliveries in Your Area</p>
             <div class="deliver-address">
-                <input type="hidden" id="home-location-long">
-                <input type="hidden" id="home-location-lat">
-                <input type="text" class="" style="width:90%" id="home-location-search">
+                <input type="hidden" name="userStoreLat" id="home-location-lat">
+                <input type="hidden" name="userStoreLong" id="home-location-long">
+                <input type="text" name="userStoreAddress" class="" style="width:90%" id="home-location-search">
                 <input type="submit" class="home-location-btn btn-danger" style="width:10%" value="search">
             </div>
         </div>
+        {{ Form::close() }}
     </div>
     <div class="row no-gutters ftco-services">
       <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">

@@ -16,8 +16,11 @@ use App\Http\Controllers\InitController;
 */
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/get-admin-path', 'admin\GeneralController@get_admin_path');
+Route::post('/store-listing', 'StoreController@storeListing');
+Route::get('/store-listing', 'StoreController@storeListing')->name('storelisting');
 Route::get('/{page}', 'PageController')->name('page')->where('page', 'about|privacy|terms');
+
+Route::get('/get-admin-path', 'admin\GeneralController@get_admin_path');
 
 //For Permissions
 Route::get('create-permission', [InitController::class, 'initialize']);

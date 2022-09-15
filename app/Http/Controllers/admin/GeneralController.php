@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Store;
 use App\Models\State;
 use App\Models\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GeneralClass;
+
 
 class GeneralController extends Controller
 {
@@ -50,6 +52,32 @@ class GeneralController extends Controller
         }
 
         return $optionHtml;
+    }
+
+    public function getstoreData($location, $args = []) {
+        $lat = $location['lat'];
+        $long = $location['long'];
+
+        $storeData = Store::with(['getProducts'])
+                        ->where(['status' => 'Active',])
+                        ->whereNotNull('store_timing')
+                        ->where('image','!=','');
+
+        if($args['getPagination']) {
+            $storeData = $storeData->paginate();
+        } else {
+            $storeData = $storeData->get();
+        }
+
+        return $storeData->reject(function ($store) {
+            if( count($store->getProducts) > 0) {
+                foreach($store->getProducts as $product) {
+                    return $product->status != "Active";
+                }
+            }
+
+            return true;
+        });
     }
 
 }

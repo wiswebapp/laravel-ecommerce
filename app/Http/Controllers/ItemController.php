@@ -12,6 +12,7 @@ class ItemController extends Controller
         if(empty($data['product'])){
             return redirect('/?err=item-not-found');
         }
+
         return view('item.view')->with('data', $data);
     }
 }
