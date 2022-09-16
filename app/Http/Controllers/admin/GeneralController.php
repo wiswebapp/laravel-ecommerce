@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Store;
 use App\Models\State;
 use App\Models\Country;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GeneralClass;
-
 
 class GeneralController extends Controller
 {
@@ -58,26 +57,22 @@ class GeneralController extends Controller
         $lat = $location['lat'];
         $long = $location['long'];
 
-        $storeData = Store::with(['getProducts'])
-                        ->where(['status' => 'Active',])
-                        ->whereNotNull('store_timing')
-                        ->where('image','!=','');
+        $storeData = DB::table('stores')
+                        ->leftJoin('products', 'stores.id', '=', 'products.store_id')
+                        ->where([
+                            'stores.status' => 'Active',
+                            'products.status' => 'Active',
+                        ])
+                        ->whereNotNull('stores.store_timing')
+                        ->where('stores.image','!=','');
 
         if($args['getPagination']) {
-            $storeData = $storeData->paginate();
+            $storeData = $storeData->paginate(10);
         } else {
             $storeData = $storeData->get();
         }
 
-        return $storeData->reject(function ($store) {
-            if( count($store->getProducts) > 0) {
-                foreach($store->getProducts as $product) {
-                    return $product->status != "Active";
-                }
-            }
-
-            return true;
-        });
+        return $storeData;
     }
 
 }

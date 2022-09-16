@@ -12,7 +12,7 @@ class StoreController extends GeneralController
     public function storeListing(Request $request){
 
         if ($request->method() == "POST") {
-            $osmUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat='. $lat .'&lon='. $long .'&zoom=18&addressdetails=1';
+            $osmUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat='. $request->userStoreLat .'&lon='. $request->userStoreLong .'&zoom=18&addressdetails=1';
             /*
                 Address Example
                 https://nominatim.openstreetmap.org/reverse?format=json&lat=23.0225&lon=72.5714&zoom=18&addressdetails=1
@@ -42,7 +42,8 @@ class StoreController extends GeneralController
         $add['neighbour'] = empty($userStore['neighbourhood']) ? $userStore['state_district'] : $userStore['neighbourhood'];
         $data['shownAddress'] = implode(', ', array_filter($add));
         $data['storeData'] = $this->getstoreData($location, [
-            'getPagination' => true
+            'getPagination' => true,
+            'request' => $request,
         ]);
 
         return view('store_listing')->with('data',$data);
