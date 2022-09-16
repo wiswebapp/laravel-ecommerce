@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\admin\GeneralController;
+use App\Models\Store;
 
 class StoreController extends GeneralController
 {
@@ -46,6 +47,17 @@ class StoreController extends GeneralController
             'request' => $request,
         ]);
 
-        return view('store_listing')->with('data',$data);
+        return view('store_listing')->with('data', $data);
+    }
+
+    public function storeDetails(Request $request, $id){
+        $today = strtolower(date('l'));
+        $storeData = Store::findorFail($id);
+        $data['storeData'] = $storeData;
+
+        $data['storeMorningTime'] = $storeData->store_timing->$today->morning->start ." - ". $storeData->store_timing->$today->morning->end;
+        $data['storeEveningTime'] = $storeData->store_timing->$today->evening->start ." - ". $storeData->store_timing->$today->evening->end;
+
+        return view('store_detail')->with('data', $data);
     }
 }

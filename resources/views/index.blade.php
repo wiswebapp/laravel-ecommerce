@@ -301,7 +301,7 @@
             <div class="overlay"></div>
           </a>
           <div class="text py-3 pb-4 px-3 text-center">
-            <h3><a href="#">{{$store->name}}</a></h3>
+            <h3><a href="/store-detail/{{$store->id}}">{{$store->name}}</a></h3>
           </div>
         </div>
       </div>

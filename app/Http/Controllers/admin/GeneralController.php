@@ -58,7 +58,8 @@ class GeneralController extends Controller
         $long = $location['long'];
 
         $storeData = DB::table('stores')
-                        ->leftJoin('products', 'stores.id', '=', 'products.store_id')
+                        ->select('stores.*')
+                        ->join('products', 'stores.id', '=', 'products.store_id')
                         ->where([
                             'stores.status' => 'Active',
                             'products.status' => 'Active',

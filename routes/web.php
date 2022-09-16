@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/store-listing', 'StoreController@storeListing');
 Route::get('/store-listing', 'StoreController@storeListing')->name('storelisting');
+Route::get('/store-detail/{storeId}', 'StoreController@storeDetails')->name('storeDetails');
 Route::get('/{page}', 'PageController')->name('page')->where('page', 'about|privacy|terms');
 
 Route::get('/get-admin-path', 'admin\GeneralController@get_admin_path');

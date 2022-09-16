@@ -15,14 +15,17 @@
       @foreach ($data['storeData'] as $store)
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="product">
-          <a href="#" class="img-prod">
+          <a href="/store-detail/{{$store->id}}" class="img-prod">
             <img class="img-fluid" src="{{asset('storage/store/'.$store->image)}}" alt="{{$store->name}}">
-            <span class="status">30% Offer Now</span>
+            <span class="status">{{rand(5,50)}}% Offer Now</span>
             <div class="overlay"></div>
           </a>
-          <div class="text py-3 pb-4 px-3 text-center">
-            <h3><a href="#">{{$store->name}}</a></h3>
-            <p><a href="#">{{$store->address}}</a></p>
+          <div class="text py-3 pb-4 px-3">
+            <h3><a href="/store-detail/{{$store->id}}">{{$store->name}}</a> <label class="badge badge-success">{{rand(1,4)}}.5 ⭐</label></h3>
+            <p><a>Delivers In {{rand(10,30)}} Minutes</a></p>
+            <hr>
+            <p style="margin:0px;"><strong>Address :</strong>{{$store->address}}</p>
+            {{$store->id}}
           </div>
         </div>
       </div>
