@@ -11,7 +11,7 @@
             <input type="text" class="form-control" readonly value="{{$data['shownAddress']}}">
             </div>
         </div>
-        </div>
+      </div>
       @foreach ($data['storeData'] as $store)
       <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="product">

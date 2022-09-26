@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\admin\GeneralController;
-use App\Models\Store;
+use App\Http\Controllers\admin\FilterController;
+use App\Models\Product;
 
-class StoreController extends GeneralController
+class StoreController extends FilterController
 {
-    public function storeListing(Request $request){
+    public function storeListing(Request $request) {
 
         if ($request->method() == "POST") {
             $osmUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat='. $request->userStoreLat .'&lon='. $request->userStoreLong .'&zoom=18&addressdetails=1';
@@ -50,14 +51,23 @@ class StoreController extends GeneralController
         return view('store_listing')->with('data', $data);
     }
 
-    public function storeDetails(Request $request, $id){
+    public function storeDetails(Request $request, $id) {
         $today = strtolower(date('l'));
         $storeData = Store::findorFail($id);
         $data['storeData'] = $storeData;
-
+        $data['categoryData'] = $this->filterCategoryData($request, false, ['fields' => 'id,category_name'])->get();
         $data['storeMorningTime'] = $storeData->store_timing->$today->morning->start ." - ". $storeData->store_timing->$today->morning->end;
         $data['storeEveningTime'] = $storeData->store_timing->$today->evening->start ." - ". $storeData->store_timing->$today->evening->end;
 
         return view('store_detail')->with('data', $data);
+    }
+
+    /**
+     * @Route("/Product
+     */
+    public function getProductDetail(Request $request) {
+        $productData = Product::find($request->get('storeId'))->toArray();
+
+        return $productData;
     }
 }

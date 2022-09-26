@@ -22,6 +22,8 @@ Route::get('/store-detail/{storeId}', 'StoreController@storeDetails')->name('sto
 Route::get('/{page}', 'PageController')->name('page')->where('page', 'about|privacy|terms');
 
 Route::get('/get-admin-path', 'admin\GeneralController@get_admin_path');
+// VueJS Call
+Route::post('/get-product-detail', 'StoreController@getProductDetail');
 
 //For Permissions
 Route::get('create-permission', [InitController::class, 'initialize']);

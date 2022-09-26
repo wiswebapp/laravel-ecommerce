@@ -27,13 +27,18 @@
 
 <body class="goto-here">
 
-    @include('includes.header')
+    <div id="app">
 
-    @yield('content')
+        @include('includes.header')
 
-    @include('includes.footer')
+        @yield('content')
+
+        @include('includes.footer')
+
+    </div>
 
     @include('includes.scripts')
+
 
 </body>
 </html>

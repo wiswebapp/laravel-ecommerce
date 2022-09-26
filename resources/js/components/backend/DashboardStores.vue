@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import StoreMixin from '../mixins/StoreMixin'
+import StoreMixin from '../../mixins/StoreMixin'
 
 export default {
     data(){
