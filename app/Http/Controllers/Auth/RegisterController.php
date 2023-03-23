@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\UserRegisterEvent;
 use App\Models\User;
+use App\Events\UserRegisterEvent;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -74,9 +74,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'status' => 'Active'
         ];
-        
+
         $userCreate = User::create($userData);
-        
+
         event(new UserRegisterEvent($userData) );
 
         return $userCreate;

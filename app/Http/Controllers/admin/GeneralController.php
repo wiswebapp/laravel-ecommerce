@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\State;
 use App\Models\Country;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GeneralClass;
 
@@ -50,6 +51,29 @@ class GeneralController extends Controller
         }
 
         return $optionHtml;
+    }
+
+    public function getstoreData($location, $args = []) {
+        $lat = $location['lat'];
+        $long = $location['long'];
+
+        $storeData = DB::table('stores')
+                        ->select('stores.*')
+                        ->join('products', 'stores.id', '=', 'products.store_id')
+                        ->where([
+                            'stores.status' => 'Active',
+                            'products.status' => 'Active',
+                        ])
+                        ->whereNotNull('stores.store_timing')
+                        ->where('stores.image','!=','');
+
+        if($args['getPagination']) {
+            $storeData = $storeData->paginate(10);
+        } else {
+            $storeData = $storeData->get();
+        }
+
+        return $storeData;
     }
 
 }

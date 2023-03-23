@@ -15,6 +15,7 @@ class PageController extends Controller
             case 'help': $data = Pages::find(4); break;
             default: $data = Pages::find(4); break;
         }
+
         return view('pages.master')->with('data', $data);
     }
 }

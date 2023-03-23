@@ -72,12 +72,11 @@
                     <tr>
                       <th><input type="checkbox" class="select-all-cb"></th>
                       <th>Image</th>
-                      <th>Store Name</th>
-                      <th>Category</th>
                       <th>Product name</th>
+                      <th>Store Name</th>
                       <th>Product Price</th>
-                      <th>Availiblity</th>
                       <th>Stock Count</th>
+                      <th>Availiblity</th>
                       <th>Status</th>
                       <th style="width: 15%">Action</th>
                     </tr>
@@ -88,17 +87,12 @@
                             <tr>
                                 <td><input type="checkbox" data-id="{{$pageData->id}}" class="data-cb"></td>
                                 <td><img style="height:100px;width:100px;" class="img img-thumbnail" src="<?=(! empty($pageData->product_image) ? '/storage/product/'.$pageData->product_image : "https://dummyimage.com/100x100/000/fff&text=No+Image")?>" alt="No Image Availble"></td>
-                                <td><?=$pageData->store->name?></td>
-                                <td><?=$pageData->category->category_name?></td>
                                 <td><?=$pageData->product_name?></td>
+                                <td><?=$pageData->store->name?></td>
                                 <td><?=formatNum($pageData->price)?></td>
-                                <td>
-                                    {!! generateYesNo($pageData->is_available) !!}
-                                </td>
                                 <td><?=$pageData->stock_count?></td>
-                                <td>
-                                    {!! generateStatusRow($pageData) !!}
-                                </td>
+                                <td>{!! generateYesNo($pageData->is_available) !!}</td>
+                                <td>{!! generateStatusRow($pageData) !!}</td>
                                 <td>
                                   @can('Edit Product')
                                   {!! generateEditButton($routeEditUrl.'/'.$pageData->id) !!}

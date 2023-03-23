@@ -19,15 +19,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component(
-    'dashboard-stores',
-    require('./components/DashboardStores.vue').default
-);
-Vue.component(
-    'dashboard-users',
-    require('./components/DashboardUsers.vue').default
-);
-
+require('./components/frontend-components');
+require('./components/backend-components');
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
